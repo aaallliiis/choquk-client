@@ -1,5 +1,5 @@
-import {register} from './auth';
+import {register,login} from './auth';
 
 export{
-  register
+  register,login
 }

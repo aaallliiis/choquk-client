@@ -2,9 +2,11 @@ import React , {useState} from 'react';
 import {Box, Button, Grid, TextField } from '@material-ui/core';
 import imge from '../../assets/img.jpg';
 import {register} from '../../api'
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 
 export default function Register(){
+    const history = useHistory();
+
     const [body,setBody]= useState({
         name:'',
         email:'',
@@ -23,7 +25,7 @@ export default function Register(){
             console.log("Please enter valid email address.");
         }else{
             register(body)
-            .then(res=>console.log(res))
+            .then(()=>history.push('/login'))
             .catch(({response:{data}})=>console.log(data))
         }
     }

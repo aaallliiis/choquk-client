@@ -12,6 +12,7 @@ export default function Register(){
     const [body,setBody]= useState({
         name:'',
         email:'',
+        phoneNumber:'',
         password:''
     })
 
@@ -45,7 +46,7 @@ export default function Register(){
             handleOpenSnack(errorsMessages.invalidEmail,snackbarTypes.error);
         }else{
             register(body)
-            .then(()=>history.push('/login'))
+            .then(()=>history.push('/verification',{phoneNumber:body.phoneNumber}))
             .catch(({response:{data:{errors}}})=>handleOpenSnack(errors[0],snackbarTypes.error))
         }
     }
@@ -65,6 +66,10 @@ export default function Register(){
                     <TextField style={{width:'77%'}} label="email" type='email' required
                         variant="outlined" 
                         onChange={({target:{value}})=>setBody(old=>{return{...old,email:value}})}
+                    />
+                    <TextField style={{width:'77%'}} label="phone number" required
+                        variant="outlined" 
+                        onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
                     />
                     <TextField style={{width:'77%'}} label="password" type='password' required 
                         variant="outlined" 

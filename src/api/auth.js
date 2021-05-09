@@ -7,3 +7,7 @@ export function register(body){
 export function login(body){
     return Axios.post('/login',body).then(({data})=>data)
 }
+
+export function verification(body){
+    return Axios.post('/verification',body).then(({data})=>data)
+}

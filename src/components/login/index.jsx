@@ -1,5 +1,6 @@
 import React , {useState} from 'react';
-import {Box, Button, Grid, TextField } from '@material-ui/core';
+import {Box, Button, Grid, TextField, IconButton, InputAdornment } from '@material-ui/core';
+import {VisibilityOff,Visibility} from '@material-ui/icons';
 import {login} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
@@ -11,6 +12,8 @@ export default function Login(){
         email:'',
         password:''
     })
+
+    const [showPassword,setShowPassword]= useState(false)
 
     const [snack,setSnack]= useState({
         status:false,
@@ -43,6 +46,8 @@ export default function Login(){
         }
     }
 
+    const handleClickShowPassword = ()=>setShowPassword(!showPassword)
+
     return (
         <Box width='100%' height='100%' style={{display:'flex'}}>
             <Snackbar message={snack.message} type={snack.type} handleClose={handleCloseSnack} open={snack.status}/>
@@ -56,14 +61,24 @@ export default function Login(){
                             variant="outlined" 
                             onChange={({target:{value}})=>setBody(old=>{return{...old,email:value}})}
                         />
-                        <TextField style={{width:'77%'}} label="password" type='password' required 
+                        <TextField style={{width:'77%'}} label="password" type={showPassword?'text':'password'} required 
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={handleClickShowPassword}>
+                                            {showPassword?<Visibility />:<VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                             variant="outlined" 
                             onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
                         />
                         <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleLogin} >login</Button>
                     </Grid>
                     <Grid container alignItems='center' style={{marginLeft:'5rem'}}>
-                        <span>don't have accout? <Link to='/register'>register</Link></span>
+                        <span style={{width:'100%'}}>don't have accout? <Link to='/register'>register</Link></span>
+                        <span style={{width:'100%'}}>want to active your account? <Link to='/verification'>verification</Link></span>
                     </Grid>
                 </Grid>
             </Box>

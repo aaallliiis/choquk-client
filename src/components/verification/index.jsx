@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField } from '@material-ui/core';
-import {verification} from '../../api';
+import {verification,sendVerificationCode} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
 import { useLocation,useHistory } from 'react-router-dom';
@@ -9,6 +9,8 @@ import Snackbar from '../snackbar';
 export default function Verification(){
     const {state} = useLocation();
     const history = useHistory();
+
+    const [status,setStatus]= useState(false)
 
     const [body,setBody]= useState({
         phoneNumber:state?state.phoneNumber:'',
@@ -43,6 +45,19 @@ export default function Verification(){
         }
     }
 
+    const handleSendCode = ()=>{
+        if(body.phoneNumber===''){
+            handleOpenSnack(errorsMessages.emptyField,snackbarTypes.error);
+        }else{
+            sendVerificationCode({phoneNumber:body.phoneNumber})
+            .then(res=>{
+                handleOpenSnack(res,snackbarTypes.success);
+                setStatus(true);
+            })
+            .catch(({response:{data:{errors}}})=>handleOpenSnack(errors[0],snackbarTypes.error))
+        }
+    }
+
     return (
         <Box width='100%' height='100%' style={{display:'flex'}}>
             <Snackbar message={snack.message} type={snack.type} handleClose={handleCloseSnack} open={snack.status}/>
@@ -62,11 +77,16 @@ export default function Verification(){
                             defaultValue={body.phoneNumber}
                             onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
                         />
-                        <TextField style={{width:'77%'}} label="code" required 
-                            variant="outlined" 
-                            onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
-                        />
-                        <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleVerification} >verification</Button>
+                        {status?
+                            <React.Fragment>
+                                <TextField style={{width:'77%'}} label="code" required 
+                                    variant="outlined" 
+                                    onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
+                                    />
+                                <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleVerification} >verification</Button>
+                            </React.Fragment>:
+                            <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleSendCode} >send code</Button>
+                        }
                     </Grid>
                 </Grid>
             </Box>

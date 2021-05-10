@@ -1,5 +1,5 @@
-import {register,login,verification} from './auth';
+import {register,login,verification,sendVerificationCode} from './auth';
 
 export{
-  register,login,verification
+  register,login,verification,sendVerificationCode
 }

@@ -41,7 +41,7 @@ export default function Verification(){
         }else{
             verification(body)
             .then(()=>history.push('/login'))
-            .catch(({response:{data:{errors}}})=>handleOpenSnack(errors[0],snackbarTypes.error))
+            .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }
     }
 
@@ -50,11 +50,11 @@ export default function Verification(){
             handleOpenSnack(errorsMessages.emptyField,snackbarTypes.error);
         }else{
             sendVerificationCode({phoneNumber:body.phoneNumber})
-            .then(res=>{
-                handleOpenSnack(res,snackbarTypes.success);
+            .then(({data})=>{
+                handleOpenSnack(data,snackbarTypes.success);
                 setStatus(true);
             })
-            .catch(({response:{data:{errors}}})=>handleOpenSnack(errors[0],snackbarTypes.error))
+            .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }
     }
 

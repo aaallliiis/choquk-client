@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment } from '@material-ui/core';
-import {VisibilityOff,Visibility} from '@material-ui/icons';
+import {VisibilityOff,Visibility, LocalMallTwoTone} from '@material-ui/icons';
 import {login} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
@@ -41,8 +41,11 @@ export default function Login(){
             handleOpenSnack(errorsMessages.invalidEmail,snackbarTypes.error);
         }else{
             login(body)
-            .then((res)=>handleOpenSnack(res.status,snackbarTypes.success))
-            .catch(({response:{data:{errors}}})=>handleOpenSnack(errors[0],snackbarTypes.error))
+            .then((res)=>{
+                localStorage.setItem('token',`Bearer ${res.data}`)
+                handleOpenSnack(res.status,snackbarTypes.success)
+            })
+            .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }
     }
 

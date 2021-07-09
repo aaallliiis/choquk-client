@@ -6,6 +6,7 @@ import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
 import { Link } from 'react-router-dom';
 import Snackbar from '../snackbar';
+
 const useStyles = makeStyles({
     main:{
         width:'100%',
@@ -94,7 +95,7 @@ export default function Login(){
             <Box className={classes.loginBox}>
                 <Box className={classes.form} >
                     <h1>ورود</h1>
-                    <Grid container direction='column' justify='space-around' style={{height:'70%'}}>
+                    <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
                         <div className={classes.inputDiv}>
                             <lable>ایمیل</lable>
                             <TextField className={classes.inputs} label="ایمیل" type='email' required

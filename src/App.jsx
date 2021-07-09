@@ -8,17 +8,13 @@ import {
 import Login from './components/login';
 import Register from './components/register';
 import Verification from './components/verification';
-import imge from './assets/img.png';
 import { Box } from '@material-ui/core';
 
 function App() {
   return (
     <Box height='100%' width='100%' 
       style={{
-        backgroundImage:`url(${imge})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition:'center',
-        backgroundSize:'cover'
+        backgroundColor:'rgba(196, 196, 196,40%)'
       }}
     >
       <Router>

@@ -1,13 +1,20 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'vazir-regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/Vazir-Regular-FD.ttf'); 
+  src: local('Vazir'), local('Vazir'),
+       url('./assets/fonts/Vazir-Regular-FD.eot') format('embedded-opentype'), 
+       url('./assets/fonts/Vazir-Regular-FD.woff2') format('woff2'), 
+       url('./assets/fonts/Vazir-Regular-FD.woff') format('woff'), 
+       url('./assets/fonts/Vazir-Regular-FD.ttf') format('truetype'), 
+}
+*{
+  font-family: 'vazir-regular','arial','sans-serif';
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  direction: rtl;
+  font-family: 'vazir-regular','arial','sans-serif';
 }

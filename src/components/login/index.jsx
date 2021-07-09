@@ -1,13 +1,50 @@
 import React , {useState} from 'react';
-import {Box, Button, Grid, TextField, IconButton, InputAdornment } from '@material-ui/core';
-import {VisibilityOff,Visibility, LocalMallTwoTone} from '@material-ui/icons';
+import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
+import {VisibilityOff,Visibility} from '@material-ui/icons';
 import {login} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
 import { Link } from 'react-router-dom';
 import Snackbar from '../snackbar';
+const useStyles = makeStyles({
+    main:{
+        width:'100%',
+        height:'100%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    loginBox:{
+        width:'25%',
+        height:'45%',
+        backgroundColor:'#E8F3F6',
+        borderRadius:'2rem',
+        display:'flex',
+        justifyContent:'center',
+    },
+    form:{
+        width:'90%',
+        height:'90%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'column'
+    },
+    inputDiv:{
+        width:'77%',
+        height:'30%',
+        display:'flex',
+        justifyContent:'space-between',
+        flexDirection:'column'
+    },
+    inputs:{
+        width:'100%',
+        direction:'ltr'
+    }
+})
 
 export default function Login(){
+    const classes = useStyles();
     const [body,setBody]= useState({
         email:'',
         password:''
@@ -52,38 +89,42 @@ export default function Login(){
     const handleClickShowPassword = ()=>setShowPassword(!showPassword)
 
     return (
-        <Box width='100%' height='100%' style={{display:'flex'}}>
+        <Box className={classes.main}>
             <Snackbar message={snack.message} type={snack.type} handleClose={handleCloseSnack} open={snack.status}/>
-            <Box width='50%'>
-                <Grid container justify='center' alignItems='center' style={{width:'90%',height:500,paddingTop:90,marginLeft:40}} >
-                    <Grid container style={{marginLeft:'5rem',height:'15%'}} >
-                        <h2>login</h2>
+            <Box className={classes.loginBox}>
+                <Box className={classes.form} >
+                    <h1>ورود</h1>
+                    <Grid container direction='column' justify='space-around' style={{height:'70%'}}>
+                        <div className={classes.inputDiv}>
+                            <lable>ایمیل</lable>
+                            <TextField className={classes.inputs} label="ایمیل" type='email' required
+                                variant="outlined" 
+                                onChange={({target:{value}})=>setBody(old=>{return{...old,email:value}})}
+                            />
+                        </div>
+                        <div className={classes.inputDiv}>
+                            <lable>رمزعبور</lable>
+                            <TextField className={classes.inputs} label="رمزعبور" type={showPassword?'text':'password'} required 
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={handleClickShowPassword}>
+                                                {showPassword?<Visibility />:<VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                variant="outlined" 
+                                onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
+                            />
+                        </div>
+                        <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleLogin} >ورود</Button>
                     </Grid>
-                    <Grid container justify='center' alignItems='center' style={{height:'85%'}}>
-                        <TextField style={{width:'77%'}} label="email" type='email' required
-                            variant="outlined" 
-                            onChange={({target:{value}})=>setBody(old=>{return{...old,email:value}})}
-                        />
-                        <TextField style={{width:'77%'}} label="password" type={showPassword?'text':'password'} required 
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleClickShowPassword}>
-                                            {showPassword?<Visibility />:<VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            variant="outlined" 
-                            onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
-                        />
-                        <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleLogin} >login</Button>
+                    <Grid container style={{marginRight:'7rem'}}>
+                        <span style={{width:'100%'}}>حساب کاربری ندارید؟ <Link to='/register'>ثبت نام</Link></span>
+                        <span style={{width:'100%'}}>نیاز به فعال سازی حساب دارید؟ <Link to='/verification'>فعال سازی</Link></span>
                     </Grid>
-                    <Grid container alignItems='center' style={{marginLeft:'5rem'}}>
-                        <span style={{width:'100%'}}>don't have accout? <Link to='/register'>register</Link></span>
-                        <span style={{width:'100%'}}>want to active your account? <Link to='/verification'>verification</Link></span>
-                    </Grid>
-                </Grid>
+                </Box>
             </Box>
         </Box>
     )

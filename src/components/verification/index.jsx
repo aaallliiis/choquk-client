@@ -1,12 +1,50 @@
 import React , {useState} from 'react';
-import {Box, Button, Grid, TextField } from '@material-ui/core';
+import {Box, Button, Grid, TextField,makeStyles } from '@material-ui/core';
 import {verification,sendVerificationCode} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
 import { useLocation,useHistory } from 'react-router-dom';
 import Snackbar from '../snackbar';
 
+const useStyles = makeStyles({
+    main:{
+        width:'100%',
+        height:'100%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    verificationBox:{
+        width:'25%',
+        height:'45%',
+        backgroundColor:'#E8F3F6',
+        borderRadius:'2rem',
+        display:'flex',
+        justifyContent:'center',
+    },
+    form:{
+        width:'90%',
+        height:'90%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'column'
+    },
+    inputDiv:{
+        width:'77%',
+        height:'30%',
+        display:'flex',
+        justifyContent:'space-between',
+        flexDirection:'column'
+    },
+    inputs:{
+        width:'100%',
+        direction:'ltr'
+    }
+})
+
 export default function Verification(){
+    const classes = useStyles();
     const {state} = useLocation();
     const history = useHistory();
 
@@ -59,36 +97,36 @@ export default function Verification(){
     }
 
     return (
-        <Box width='100%' height='100%' style={{display:'flex'}}>
+        <Box className={classes.main}>
             <Snackbar message={snack.message} type={snack.type} handleClose={handleCloseSnack} open={snack.status}/>
-            <Box width='50%'>
-                <Grid container justify='center' alignItems='center' style={{width:'90%',height:500,paddingTop:90,marginLeft:40}} >
-                    <Grid container style={{marginLeft:'5rem',height:'30%'}} >
-                        <div style={{width:'100%'}}>
-                            <h2>verification</h2>
+            <Box className={classes.verificationBox}>
+                <Box className={classes.form}>
+                    <h1>فعال سازی</h1>
+                    {status?<h3>کد دریافتی را وارد کنید</h3>:<h3>شماره همراه خود را جهت دریافت کد وارد کنید</h3>}
+                    <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
+                        <div className={classes.inputDiv}>
+                            <lable>شماره همراه</lable>
+                            <TextField className={classes.inputs} label="شماره همراه" required
+                                variant="outlined" 
+                                defaultValue={body.phoneNumber}
+                                onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
+                            />
                         </div>
-                        <div style={{width:'100%'}}>
-                            <h3>enter the code that sent to your phone</h3>
-                        </div>
-                    </Grid>
-                    <Grid container justify='center' alignItems='center' style={{height:'85%'}}>
-                        <TextField style={{width:'77%'}} label="phone" required
-                            variant="outlined" 
-                            defaultValue={body.phoneNumber}
-                            onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
-                        />
                         {status?
                             <React.Fragment>
-                                <TextField style={{width:'77%'}} label="code" required 
-                                    variant="outlined" 
-                                    onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
+                                <div className={classes.inputDiv}>
+                                    <lable>کد</lable>
+                                    <TextField className={classes.inputs} label="کد" required 
+                                        variant="outlined" 
+                                        onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
                                     />
-                                <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleVerification} >verification</Button>
+                                </div>
+                                <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleVerification} >فعال سازی</Button>
                             </React.Fragment>:
-                            <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleSendCode} >send code</Button>
+                            <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleSendCode} >ارسال کد</Button>
                         }
                     </Grid>
-                </Grid>
+                </Box>
             </Box>
         </Box>
     )

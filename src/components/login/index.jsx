@@ -93,7 +93,7 @@ export default function Login(){
         <Box className={classes.main}>
             <Snackbar message={snack.message} type={snack.type} handleClose={handleCloseSnack} open={snack.status}/>
             <Box className={classes.loginBox}>
-                <Box className={classes.form} >
+                <Box className={classes.form}>
                     <h1>ورود</h1>
                     <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
                         <div className={classes.inputDiv}>

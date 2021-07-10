@@ -5,7 +5,7 @@ import {login} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
 import { Link } from 'react-router-dom';
-import Snackbar from '../snackbar';
+import Snackbar from '../../components/snackbar';
 
 const useStyles = makeStyles({
     main:{
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     },
     loginBox:{
         width:'25%',
-        height:'45%',
+        height:'55%',
         backgroundColor:'#E8F3F6',
         borderRadius:'2rem',
         display:'flex',

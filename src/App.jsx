@@ -5,9 +5,9 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Login from './components/login';
-import Register from './components/register';
-import Verification from './components/verification';
+import Login from './views/login';
+import Register from './views/register';
+import Verification from './views/verification';
 import { Box } from '@material-ui/core';
 
 function App() {

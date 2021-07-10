@@ -5,7 +5,7 @@ import {register} from '../../api'
 import { Link,useHistory } from 'react-router-dom';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
-import Snackbar from '../snackbar';
+import Snackbar from '../../components/snackbar';
 
 const useStyles = makeStyles({
     main:{
@@ -22,6 +22,8 @@ const useStyles = makeStyles({
         borderRadius:'2rem',
         display:'flex',
         justifyContent:'center',
+        position:'relative',
+        boxSizing:'border-box'
     },
     form:{
         width:'90%',
@@ -29,14 +31,15 @@ const useStyles = makeStyles({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        flexDirection:'column'
+        flexDirection:'column',
     },
     inputDiv:{
         width:'77%',
         height:'15%',
         display:'flex',
         justifyContent:'space-between',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginBottom:30
     },
     inputs:{
         width:'100%',
@@ -137,11 +140,13 @@ export default function Register(){
                             onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
                         />
                     </div>
-                    <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleRegister}>ثبت نام</Button>
+                    <Button style={{backgroundColor:'#39a1ff',width:'77%',marginTop:30}} onClick={handleRegister}>ثبت نام</Button>
                 </Grid>
-                <Grid container alignItems='center' style={{marginRight:'7rem'}}>
-                    <span>حساب کاربری دارید؟ <Link to='/login'>ورود</Link></span>
-                </Grid>
+                <span style={{
+                    position:'absolute',
+                    right:'5.5rem',
+                    bottom:20
+                }}>حساب کاربری دارید؟ <Link to='/login'>ورود</Link></span>
             </Box>
         </Box>
     </Box>

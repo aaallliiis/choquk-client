@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         alignItems:'center'
     },
     loginBox:{
-        width:'25%',
+        width:'30%',
         height:'fit-content',
         minHeight:'500px',
         backgroundColor:'#E8F3F6',
@@ -38,7 +38,8 @@ const useStyles = makeStyles({
         height:'30%',
         display:'flex',
         justifyContent:'space-between',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginBottom:15
     },
     inputs:{
         width:'100%',
@@ -122,9 +123,9 @@ export default function Login(){
                                 onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
                             />
                         </div>
-                        <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleLogin} >ورود</Button>
+                        <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleLogin} >ورود</Button>
                     </Grid>
-                    <Grid container style={{marginRight:'7rem'}}>
+                    <Grid container style={{width:'77%',margin:'15px 0 20px 0'}}>
                         <span style={{width:'100%'}}>حساب کاربری ندارید؟ <Link to='/register'>ثبت نام</Link></span>
                         <span style={{width:'100%'}}>نیاز به فعال سازی حساب دارید؟ <Link to='/verification'>فعال سازی</Link></span>
                     </Grid>

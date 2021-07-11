@@ -5,17 +5,18 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Login from './views/login';
-import Register from './views/register';
-import Verification from './views/verification';
+import Login from './views/User/login';
+import Register from './views/User/register';
+import Verification from './views/User/verification';
 import { Box } from '@material-ui/core';
 import { useEffect } from 'react';
-import Home from './views/home';
+import Home from './views/User/home';
+import Admin from './views/Admin';
 
 function App() {
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [isLoggedIn,setIsLoggedIn] = useState(localStorage.getItem('token'));
 
-  useEffect(()=>setIsLoggedIn(localStorage.getItem('token')),[localStorage])
+  useEffect(()=>setIsLoggedIn(localStorage.getItem('token')),[localStorage.getItem('token')])
 
   return (
     <Box height='100%' width='100%' 
@@ -30,6 +31,9 @@ function App() {
               <Home/>:
               <Redirect to='/login'/>
             }
+          </Route>
+          <Route path="/admin">
+            <Admin/>
           </Route>
           <Route exact path="/login">
             <Login />

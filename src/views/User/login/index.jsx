@@ -1,11 +1,11 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
 import {VisibilityOff,Visibility} from '@material-ui/icons';
-import {login} from '../../api';
-import {errorsMessages} from '../../assets/errorsMessages';
-import {snackbarTypes} from '../../assets/snackbarTypes';
+import {login} from '../../../api';
+import {errorsMessages} from '../../../assets/errorsMessages';
+import {snackbarTypes} from '../../../assets/snackbarTypes';
 import { Link,useHistory } from 'react-router-dom';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../../components/snackbar';
 
 const useStyles = makeStyles({
     main:{

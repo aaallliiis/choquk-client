@@ -1,10 +1,10 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField,makeStyles } from '@material-ui/core';
-import {verification,sendVerificationCode} from '../../api';
-import {errorsMessages} from '../../assets/errorsMessages';
-import {snackbarTypes} from '../../assets/snackbarTypes';
+import {verification,sendVerificationCode} from '../../../api';
+import {errorsMessages} from '../../../assets/errorsMessages';
+import {snackbarTypes} from '../../../assets/snackbarTypes';
 import { useLocation,useHistory,Link } from 'react-router-dom';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../../components/snackbar';
 
 const useStyles = makeStyles({
     main:{
@@ -49,7 +49,7 @@ export default function Verification(){
     const {state} = useLocation();
     const history = useHistory();
 
-    const [status,setStatus]= useState(!false)
+    const [status,setStatus]= useState(false)
 
     const [body,setBody]= useState({
         phoneNumber:state?state.phoneNumber:'',

@@ -36,13 +36,22 @@ function App() {
             <Admin/>
           </Route>
           <Route exact path="/login">
-            <Login />
+            {isLoggedIn?
+              <Redirect to='/'/>:
+              <Login />
+            }
           </Route>
           <Route exact path="/register">
-            <Register />
+            {isLoggedIn?
+              <Redirect to='/'/>:
+              <Register />
+            }
           </Route>
           <Route exact path="/verification">
-            <Verification />
+            {isLoggedIn?
+              <Redirect to='/'/>:
+              <Verification />
+            }
           </Route>
         </Switch>
       </Router>

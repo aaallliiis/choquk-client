@@ -1,7 +1,7 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
 import {VisibilityOff,Visibility} from '@material-ui/icons';
-import {login} from '../../../api';
+import {adminLogin} from '../../../api';
 import {errorsMessages} from '../../../assets/errorsMessages';
 import {snackbarTypes} from '../../../assets/snackbarTypes';
 import { Link,useHistory } from 'react-router-dom';
@@ -48,9 +48,11 @@ const useStyles = makeStyles({
 })
 
 export default function Login(){
+    const push = useHistory().push
     const classes = useStyles();
+
     const [body,setBody]= useState({
-        email:'',
+        username:'',
         password:''
     })
 
@@ -75,16 +77,13 @@ export default function Login(){
     })
     
     const handleLogin = ()=>{
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        if (body.email===''||body.password==='') {
+        if (body.username===''||body.password==='') {
             handleOpenSnack(errorsMessages.emptyField,snackbarTypes.error);
-        }else if(pattern.test(body.email)) {
-            handleOpenSnack(errorsMessages.invalidEmail,snackbarTypes.error);
         }else{
-            login(body)
+            adminLogin(body)
             .then((res)=>{
                 localStorage.setItem('token',`Bearer ${res.data}`)
-                window.location.reload()
+                push('/')
             })
             .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }
@@ -100,10 +99,10 @@ export default function Login(){
                     <h1>ورود</h1>
                     <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
                         <div className={classes.inputDiv}>
-                            <lable>ایمیل</lable>
-                            <TextField className={classes.inputs} label="ایمیل" type='email' required
-                                variant="outlined" 
-                                onChange={({target:{value}})=>setBody(old=>{return{...old,email:value}})}
+                            <lable>نام کاربری</lable>
+                            <TextField className={classes.inputs} label="نام کاربری" required
+                                variant="outlined"
+                                onChange={({target:{value}})=>setBody(old=>{return{...old,username:value}})}
                             />
                         </div>
                         <div className={classes.inputDiv}>
@@ -123,10 +122,6 @@ export default function Login(){
                             />
                         </div>
                         <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleLogin} >ورود</Button>
-                    </Grid>
-                    <Grid container style={{width:'77%',margin:'15px 0 20px 0'}}>
-                        <span style={{width:'100%'}}>حساب کاربری ندارید؟ <Link to='/register'>ثبت نام</Link></span>
-                        <span style={{width:'100%'}}>نیاز به فعال سازی حساب دارید؟ <Link to='/verification'>فعال سازی</Link></span>
                     </Grid>
                 </Box>
             </Box>

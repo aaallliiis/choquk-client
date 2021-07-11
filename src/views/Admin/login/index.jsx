@@ -48,7 +48,6 @@ const useStyles = makeStyles({
 })
 
 export default function Login(){
-    const push = useHistory().push
     const classes = useStyles();
 
     const [body,setBody]= useState({
@@ -83,7 +82,7 @@ export default function Login(){
             adminLogin(body)
             .then((res)=>{
                 localStorage.setItem('token',`Bearer ${res.data}`)
-                push('/')
+                window.location.reload()
             })
             .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }
@@ -97,32 +96,34 @@ export default function Login(){
             <Box className={classes.loginBox}>
                 <Box className={classes.form}>
                     <h1>ورود</h1>
-                    <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
-                        <div className={classes.inputDiv}>
-                            <lable>نام کاربری</lable>
-                            <TextField className={classes.inputs} label="نام کاربری" required
-                                variant="outlined"
-                                onChange={({target:{value}})=>setBody(old=>{return{...old,username:value}})}
-                            />
-                        </div>
-                        <div className={classes.inputDiv}>
-                            <lable>رمزعبور</lable>
-                            <TextField className={classes.inputs} label="رمزعبور" type={showPassword?'text':'password'} required 
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton onClick={handleClickShowPassword}>
-                                                {showPassword?<Visibility />:<VisibilityOff />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                variant="outlined" 
-                                onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
-                            />
-                        </div>
-                        <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleLogin} >ورود</Button>
-                    </Grid>
+                    <form style={{width:'100%',height:'100%',marginBottom:85}} onSubmit={(e)=>{e.preventDefault();handleLogin()}} noValidate>
+                        <Grid container direction='column' alignItems='center' justify='space-around' style={{height:'70%'}}>
+                            <div className={classes.inputDiv}>
+                                <lable>نام کاربری</lable>
+                                <TextField className={classes.inputs} label="نام کاربری" required
+                                    variant="outlined"
+                                    onChange={({target:{value}})=>setBody(old=>{return{...old,username:value}})}
+                                />
+                            </div>
+                            <div className={classes.inputDiv}>
+                                <lable>رمزعبور</lable>
+                                <TextField className={classes.inputs} label="رمزعبور" type={showPassword?'text':'password'} required 
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={handleClickShowPassword}>
+                                                    {showPassword?<Visibility />:<VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    variant="outlined" 
+                                    onChange={({target:{value}})=>setBody(old=>{return{...old,password:value}})}
+                                />
+                            </div>
+                            <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} type='submit'>ورود</Button>
+                        </Grid>
+                    </form>
                 </Box>
             </Box>
         </Box>

@@ -4,7 +4,7 @@ import {VisibilityOff,Visibility} from '@material-ui/icons';
 import {login} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import Snackbar from '../../components/snackbar';
 
 const useStyles = makeStyles({
@@ -47,6 +47,7 @@ const useStyles = makeStyles({
 })
 
 export default function Login(){
+    const push = useHistory().push
     const classes = useStyles();
     const [body,setBody]= useState({
         email:'',
@@ -83,7 +84,7 @@ export default function Login(){
             login(body)
             .then((res)=>{
                 localStorage.setItem('token',`Bearer ${res.data}`)
-                handleOpenSnack(res.status,snackbarTypes.success)
+                push('/')
             })
             .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
         }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,8 +9,14 @@ import Login from './views/login';
 import Register from './views/register';
 import Verification from './views/verification';
 import { Box } from '@material-ui/core';
+import { useEffect } from 'react';
+import Home from './views/home';
 
 function App() {
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+
+  useEffect(()=>setIsLoggedIn(localStorage.getItem('token')),[localStorage])
+
   return (
     <Box height='100%' width='100%' 
       style={{
@@ -20,7 +26,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to='/login'/>
+            {isLoggedIn?
+              <Home/>:
+              <Redirect to='/login'/>
+            }
           </Route>
           <Route exact path="/login">
             <Login />

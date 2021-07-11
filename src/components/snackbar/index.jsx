@@ -11,7 +11,9 @@ export default function SnackBar({message,open,handleClose,type}){
             onClose={handleClose}
         >
             <Alert onClose={handleClose} severity={type} elevation={6} variant="filled">
-                {message}
+                <div style={{margin:'0px 30px 0px 30px'}}>
+                    {message}
+                </div>
             </Alert>
         </Snackbar>
     )

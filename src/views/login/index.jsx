@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     },
     loginBox:{
         width:'25%',
-        height:'55%',
+        height:'fit-content',
+        minHeight:'500px',
         backgroundColor:'#E8F3F6',
         borderRadius:'2rem',
         display:'flex',
@@ -25,7 +26,8 @@ const useStyles = makeStyles({
     },
     form:{
         width:'90%',
-        height:'90%',
+        height:'fit-content',
+        minHeight:'500px',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',

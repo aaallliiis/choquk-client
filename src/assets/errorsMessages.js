@@ -1,6 +1,6 @@
 export const errorsMessages={
-    emptyField:'all fields must be filled',
-    shortName:'name cant be less than 3',
-    shortPass:'password cant be less than 8',
-    invalidEmail:'Please enter valid email address',
+    emptyField:'تمام قسمت ها باید تکمیل شوند',
+    shortName:'نام و نام خانوادگی نمیتواند کمتر از ۳ حرف باشد',
+    shortPass:'رمزعبور نمیتواند کمتر از ۵ حرف باشد',
+    invalidEmail:'لطفا ایمیل معتبر وارد کنید',
 }

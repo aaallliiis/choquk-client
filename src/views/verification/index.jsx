@@ -3,7 +3,7 @@ import {Box, Button, Grid, TextField,makeStyles } from '@material-ui/core';
 import {verification,sendVerificationCode} from '../../api';
 import {errorsMessages} from '../../assets/errorsMessages';
 import {snackbarTypes} from '../../assets/snackbarTypes';
-import { useLocation,useHistory } from 'react-router-dom';
+import { useLocation,useHistory,Link } from 'react-router-dom';
 import Snackbar from '../../components/snackbar';
 
 const useStyles = makeStyles({
@@ -15,8 +15,8 @@ const useStyles = makeStyles({
         alignItems:'center'
     },
     verificationBox:{
-        width:'25vw',
-        height:'45vh',
+        width:'25%',
+        height:'fit-content',
         backgroundColor:'#E8F3F6',
         borderRadius:'2rem',
         display:'flex',
@@ -36,6 +36,7 @@ const useStyles = makeStyles({
         display:'flex',
         justifyContent:'space-between',
         flexDirection:'column',
+        marginBottom:15
     },
     inputs:{
         width:'100%',
@@ -48,7 +49,7 @@ export default function Verification(){
     const {state} = useLocation();
     const history = useHistory();
 
-    const [status,setStatus]= useState(false)
+    const [status,setStatus]= useState(!false)
 
     const [body,setBody]= useState({
         phoneNumber:state?state.phoneNumber:'',
@@ -121,10 +122,13 @@ export default function Verification(){
                                         onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
                                     />
                                 </div>
-                                <Button style={{backgroundColor:'#39a1ff',width:'77%',marginTop:30}} onClick={handleVerification} >فعال سازی</Button>
+                                <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleVerification} >فعال سازی</Button>
                             </React.Fragment>:
-                            <Button style={{backgroundColor:'#39a1ff',width:'77%'}} onClick={handleSendCode} >ارسال کد</Button>
+                            <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleSendCode} >ارسال کد</Button>
                         }
+                    </Grid>
+                    <Grid container style={{width:'77%',margin:'15px 0 20px 0'}}>
+                        <span style={{width:'100%'}}><Link to='/login'>صفحه ورود</Link></span>
                     </Grid>
                 </Box>
             </Box>

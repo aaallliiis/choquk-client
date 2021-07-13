@@ -1,10 +1,10 @@
 import React , {useState,useEffect} from 'react';
-import { useRouteMatch,useHistory,Switch ,Route ,Redirect} from 'react-router-dom';
-import Login from './login';
+import { useRouteMatch,Switch ,Route ,Redirect} from 'react-router-dom';
+import Login from './Login';
+import Dashboard from './Dashboard';
 
 export default function Admin(){
     const { path, url } = useRouteMatch();
-    const history = useHistory();
     const [isLoggedIn,setIsLoggedIn] = useState(localStorage.getItem('token'));
 
     useEffect(()=>setIsLoggedIn(localStorage.getItem('token')),[localStorage.getItem('token')])
@@ -17,7 +17,7 @@ export default function Admin(){
             </Route>
             <Route path={`${path}/dashboard`}>
                 {isLoggedIn?
-                    'admin':
+                    <Dashboard/>:
                     <Redirect to={`${path}/login`}/>
                 }
             </Route>

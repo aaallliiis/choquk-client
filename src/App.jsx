@@ -5,12 +5,12 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Login from './views/User/login';
-import Register from './views/User/register';
-import Verification from './views/User/verification';
+import Login from './views/User/Login';
+import Register from './views/User/Register';
+import Verification from './views/User/Verification';
 import { Box } from '@material-ui/core';
 import { useEffect } from 'react';
-import Home from './views/User/home';
+import Home from './views/User/Home';
 import Admin from './views/Admin';
 
 function App() {

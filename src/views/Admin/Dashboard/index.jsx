@@ -1,7 +1,6 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
 import Nav from '../../../components/NavBar';
-import {titles} from '../../../assets/titles';
 
 const useStyles = makeStyles({
     page:{

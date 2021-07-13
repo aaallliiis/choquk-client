@@ -1,5 +1,6 @@
 import React , {useState} from 'react';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
+import Nav from '../../../components/NavBar';
 
 const useStyles = makeStyles({
     page:{
@@ -30,6 +31,9 @@ export default function Home(){
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
+            <Box className={classes.navbar} height="8%" width="100%">
+                <Nav handleClick={()=>console.log('mmd')}/>
+            </Box>
             <Box className={classes.main} height="92%" width="100%">
                 {/* //? side bar section */}
                 <Box className={classes.left_sidebar} height="100%" width="18%" minWidth={300}>

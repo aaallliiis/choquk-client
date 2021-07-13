@@ -5,6 +5,7 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PersonIcon from '@material-ui/icons/Person';
 import {titles} from '../../assets/titles';
+import {getUserData} from '../../api';
 
 const useStyles=makeStyles({
   main:{
@@ -68,26 +69,25 @@ export default function StyledCheckbox({handleClick}) {
   const [open,setOpen]=useState(false)
 
   //? store user info
-  const [userInfo,setUserInfo]=useState(true)
+  const [userInfo,setUserInfo]=useState('')
 
   //? getting User Data
   useEffect(()=>{
-    // getUserData(window.sessionStorage.user_id)
-    // .then(res=>{setUserInfo(res.user_info)})
-    // .catch(err=>console.log(err))
+    getUserData()
+    .then(setUserInfo)
+    .catch(err=>console.log(err))
   },[])
 
   return (
     <React.Fragment>
       <Grid className={classes.main} container justify="flex-end" alignItems="center">
-        {userInfo && <Grid container direction="row" justify="center" alignItems="center" className={classes.profileImage} onClick={()=>{setOpen(!open)}}>
-            <PersonIcon style={{fontSize:'2vw'}} />
-          </Grid>
-        }
+        <Grid container direction="row" justify="center" alignItems="center" className={classes.profileImage} onClick={()=>{setOpen(!open)}}>
+          <PersonIcon style={{fontSize:'2vw'}} />
+        </Grid>
         <Collapse className={classes.profile} in={open}>
             <div>
               <span className={classes.triangle}></span>
-              <div className={classes.userName}>{userInfo?`${userInfo.name} ${userInfo.family_name}`:''}</div>
+              <div className={classes.userName}>{userInfo.name?`سلام ${userInfo.name}`:''}</div>
               <Grid className={classes.row} container justify="flex-start" alignItems="center">
                 <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
                 {titles.profile}

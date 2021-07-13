@@ -1,5 +1,5 @@
 import {register,login,verification,sendVerificationCode} from './user/auth';
-import {getUserData} from './user/home';
+import {getUserData,getAllFields} from './user/home';
 
 import {adminLogin} from './admin/auth';
 
@@ -9,5 +9,6 @@ export{
   verification,
   sendVerificationCode,
   adminLogin,
-  getUserData
+  getUserData,
+  getAllFields
 }

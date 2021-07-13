@@ -12,7 +12,7 @@ const useStyles=makeStyles({
     height:'100%',
     boxSizing:'border-box',
     padding:'0 2rem',
-    backgroundImage:'linear-gradient(rgba(186, 186, 186,100%), rgba(229, 229, 229,40%))'
+    backgroundColor:'rgba(128, 182, 202, 60%)'
   },
   profileImage:{
     width:'3vw',
@@ -23,7 +23,7 @@ const useStyles=makeStyles({
   profile:{
     position:'absolute',
     top:'9%',
-    left:'2%',
+    right:'2%',
     width:'15rem',
     backgroundColor:'#ffff',
     zIndex:'999',
@@ -35,7 +35,7 @@ const useStyles=makeStyles({
   triangle:{
     position:'absolute',
     top:0,
-    left:'3%',
+    right:'3%',
     borderTop:'0px solid transparent',
     borderBottom:`1rem solid white`,
     borderRight:'1rem solid transparent',
@@ -80,7 +80,7 @@ export default function StyledCheckbox({handleClick}) {
 
   return (
     <React.Fragment>
-      <Grid className={classes.main} container justify="flex-end" alignItems="center">
+      <Grid className={classes.main} container justify="flex-start" alignItems="center">
         <Grid container direction="row" justify="center" alignItems="center" className={classes.profileImage} onClick={()=>{setOpen(!open)}}>
           <PersonIcon style={{fontSize:'2vw'}} />
         </Grid>
@@ -93,7 +93,10 @@ export default function StyledCheckbox({handleClick}) {
                 {titles.profile}
               </Grid>
               <hr/>
-              <Grid className={classes.row} container justify="flex-start" alignItems="center">
+              <Grid className={classes.row} onClick={()=>{
+                localStorage.clear();
+                window.location.reload();
+              }} container justify="flex-start" alignItems="center">
                 <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
                 {titles.exit}
               </Grid>

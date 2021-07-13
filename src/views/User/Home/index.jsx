@@ -1,33 +1,70 @@
-import React , {useState} from 'react';
-import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
+import React , {useEffect,useState} from 'react';
+import {Box,Divider,makeStyles ,Button} from '@material-ui/core';
 import Nav from '../../../components/NavBar';
+import {getAllFields} from '../../../api';
 
 const useStyles = makeStyles({
     page:{
-        // backgroundColor: colors.background,
+        backgroundColor: 'rgb(232, 243, 246)',
         overflow:'hidden',
-      },
+    },
     main:{
         display:'flex',
-      },
-      left_sidebar:{
-        backgroundColor: 'transparent',
-        borderLeft:'1px',
-        // borderLeftColor:colors.fourth,
-        borderLeftStyle:'solid',
+    },
+    tree: {
+        height: 240,
+        flexGrow: 1,
+        maxWidth: 400,
+    },
+    left_sidebar:{
         overflowX:'hidden',
         overflowY:'auto',
         padding:10,
         paddingBottom:50,
         boxSizing:'border-box',
-      },
-      right:{
-        backgroundColor: 'transparent'
-      },
+    },
+    right:{
+        backgroundColor: 'transparent',
+        boxShadow:'-1px -10px 20px 0px #aaaaaa inset',
+    },
+    active:{
+        backgroundColor:'#Dbe0e5'
+    },
+    fieldBtn:{
+        width:'100%',
+        margin:'5px 25px 0px 0px',
+        border:'1px 0px 1px 0px solid red',
+        marginRight:5,
+        marginTop:10
+    },
+    courseBtn:{
+        width:'91%',
+        margin:'5px 25px 0px 0px',
+        border:'1px 0px 1px 0px solid red'
+    },
+    fieldDiv:{
+        width:'100%',
+        textAlign:'right',
+        fontWeight:'bold'
+    },
+    courseDiv:{
+        width:'100%',
+        textAlign:'right'
+    }
 })
 
 export default function Home(){
     const classes = useStyles();
+    const [fields,setFields] = useState([]);
+    
+    const [selectedFields,setSelectedFields] = useState([]);
+    const [selectedCourses,setSelectedCourses] = useState([]);
+
+    useEffect(()=>{
+        getAllFields()
+        .then(setFields)
+        .catch(err=>console.log(err))
+    },[])
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
@@ -36,111 +73,44 @@ export default function Home(){
             </Box>
             <Box className={classes.main} height="92%" width="100%">
                 {/* //? side bar section */}
-                <Box className={classes.left_sidebar} height="100%" width="18%" minWidth={300}>
-                    <Box padding='0.2rem' marginBottom="1rem">
-                        <Box className={classes.box} width="100%" height="100%" minHeight={150}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.tag}</p>
-                            <CustomizedAutoComplete handleTags={(array)=>handleTags(array)} /> */}
-                        </Box>
-                    </Box>
-                    {/*//? check box for type selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.data_type}</p>
-                            <Box>
-                                {Object.entries(searchPageDataTypeConentPersian).map(([, value])=><Box>
-                                <StyledCheckbox content={value} 
-                                    checked={searchBody.material_Type.includes(value)}
-                                    onClick={({target:{checked}})=>{
-                                    handleTypeCheckBox(value,checked);
-                                    }}
-                                />
-                                </Box>)}
-                            </Box> */}
-                        </Box>
-                    </Box>
-                    {/*//? project check box section */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.projects}</p>
-                            {projectLoading?<CircularProgress/>:
-                                <Box height='90%' style={{overflowY:'auto'}}>
-                                {allProjects.map(item => 
-                                    <Box>
-                                    <StyledCheckbox 
-                                        checked={searchBody.project.includes(item._id.$oid)}
-                                        content={item.title} 
-                                        onClick={({target:{checked}})=>{
-                                        handleProjectCheckBox(checked,item._id.$oid)
-                                        }}
-                                    />
-                                    </Box>
-                                )}
-                                </Box>
-                            } */}
-                        </Box>
-                    </Box>
-                    {/*//? security selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.security}</p>
-                            {
-                            searchPageSecurityHeaders.map(({title,id})=><Box>
-                                <StyledCheckbox content={title} 
-                                checked={searchBody.confidentiality_level.includes(title  )}
-                                onClick={({target:{checked}})=>{
-                                handleconfidentialityLevelCheckBox(title,checked);
-                                }}
-                                />
-                            </Box>) 
-                            } */}
-                        </Box>
-                    </Box>
-                    {/*//? date selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <Box className={classes.headerBox}>
-                                <Box width="100%">
-                                <hr style={{marginBottom:"6%"}}/>
-                                </Box>
-                                <Box width={170}> */}
-                                {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.time_picker}</p> */}
-                                {/* </Box>
-                            </Box> */}
-                            {/* //? start time picker */}
-                            {/* <Box my={2}>
-                                <Grid
-                                container
-                                direction="row-reverse"
-                                justify="space-around"
-                                alignItems="center"
+                <Box className={classes.left_sidebar} height="100%" width="17%">
+                    <div style={{textAlign:"center",marginBottom:10,fontWeight:'bolder'}}>رشته ها و درس ها</div>
+                    <Divider/>
+                    {fields.map(({name,_id,courses})=>
+                        <React.Fragment>
+                            <Button 
+                                onClick={()=>{
+                                    if(selectedFields.includes(_id))
+                                        setSelectedFields(old=>old.filter(item=>item!==_id))
+                                    else
+                                        setSelectedFields(old=>([...old,_id]))
+                                }} 
+                                className={`${selectedFields.includes(_id)?classes.active:''} ${classes.fieldBtn}`} 
+                            >
+                                <div className={classes.fieldDiv}>
+                                    {name}
+                                </div>
+                            </Button>
+                            {courses.map(({name,_id})=>
+                                <Button 
+                                    onClick={()=>{
+                                        if(selectedCourses.includes(_id))
+                                            setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                        else
+                                            setSelectedCourses(old=>([...old,_id]))
+                                    }} 
+                                    className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
                                 >
-                                <CustomizedDatePicker hanldeDate={(date)=>handleDatePicker(date,'date_start')}/>
-                                <span>{searchPageSideBarHeaders.from}</span>
-                                </Grid>
-                            </Box> */}
-                            {/* //? end time picker */}
-                            {/* <Box>
-                                <Grid
-                                container
-                                direction="row-reverse"
-                                justify="space-around"
-                                alignItems="center"
-                                >
-                                <CustomizedDatePicker  hanldeDate={(date)=>handleDatePicker(date,'date_end')}/>
-                                <span>{searchPageSideBarHeaders.till}</span>
-                                </Grid>
-                            </Box> */}
-                            {/* //? reset btn */}
-                            {/* <Box style={{marginTop:20}}> 
-                                {(searchBody.date_start!==""||searchBody.date_end!=="")&&<Button onClick={resetDates}>
-                                {searchPageSideBarHeaders.reset}</Button>}
-                            </Box> */}
-                        </Box>
-                    </Box>
+                                    <div className={classes.courseDiv}>
+                                        {name}
+                                    </div>
+                                </Button>
+                            )}
+                        </React.Fragment>
+                    )}
                 </Box>
                 { /*//?  show cards and tables and a button to change  */}
-                <Box className={classes.right} height="100%" width="82%">
+                <Box className={classes.right} height="100%" width="83%">
                     {/* //? search bar and toggle btn section */}
                     <Box className={classes.searchbox} height="15%" width="100%">
                         <Box className={classes.searchboxContainer} width="100%" height="100%">

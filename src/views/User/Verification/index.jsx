@@ -4,7 +4,7 @@ import {verification,sendVerificationCode} from '../../../api';
 import {errorsMessages} from '../../../assets/errorsMessages';
 import {snackbarTypes} from '../../../assets/snackbarTypes';
 import { useLocation,useHistory,Link } from 'react-router-dom';
-import Snackbar from '../../../components/snackbar';
+import Snackbar from '../../../components/Snackbar';
 
 const useStyles = makeStyles({
     main:{

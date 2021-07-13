@@ -5,7 +5,7 @@ import {register} from '../../../api'
 import { Link,useHistory } from 'react-router-dom';
 import {errorsMessages} from '../../../assets/errorsMessages';
 import {snackbarTypes} from '../../../assets/snackbarTypes';
-import Snackbar from '../../../components/snackbar';
+import Snackbar from '../../../components/Snackbar';
 
 const useStyles = makeStyles({
     main:{

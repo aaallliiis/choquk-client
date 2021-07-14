@@ -1,6 +1,7 @@
 import React , {useEffect,useState} from 'react';
 import {Box,Divider,makeStyles ,Button} from '@material-ui/core';
 import Nav from '../../../components/NavBar';
+import Cards from '../../../components/Cards';
 import {getAllFields} from '../../../api';
 
 const useStyles = makeStyles({
@@ -50,7 +51,18 @@ const useStyles = makeStyles({
     courseDiv:{
         width:'100%',
         textAlign:'right'
-    }
+    },
+    content:{
+        display:'flex',
+        flexWrap:'wrap',
+        backgroundColor: 'transparent',
+        overflowX:'hidden',
+        overflowY:'auto',
+        boxSizing:'border-box',
+        paddingTop:'1rem',
+        paddingBottom:'3rem',
+        paddingRight:'6%'
+    },
 })
 
 export default function Home(){
@@ -63,7 +75,12 @@ export default function Home(){
     useEffect(()=>{
         getAllFields()
         .then(setFields)
-        .catch(err=>console.log(err))
+        .catch(({response:{status}})=>{
+            if(status===401){
+                localStorage.clear();
+                window.location.reload();
+            }
+        })
     },[])
 
     return (
@@ -111,7 +128,7 @@ export default function Home(){
                 </Box>
                 { /*//?  show cards and tables and a button to change  */}
                 <Box className={classes.right} height="100%" width="83%">
-                    {/* //? search bar and toggle btn section */}
+                    {/* //? search bar section */}
                     <Box className={classes.searchbox} height="15%" width="100%">
                         <Box className={classes.searchboxContainer} width="100%" height="100%">
                             {/* <Grid container justify="space-between" wrap='nowrap' alignItems="center">
@@ -134,24 +151,23 @@ export default function Home(){
                     </Box>
                     {/* //? materail table and card section */}
                     <Box className={classes.content} height="85%" width="100%">
-                        {/* <CustomizedButtons keepActive={keepActive} handleClick={(value)=>setKeepActive(value)}/> */}
-                        {/* {
-                            loading?<CircularProgress/>:
-                            allMaterial.length===0?
-                                notFound?
-                                <div style={{color:'red'}}>
-                                    {searchPageSideBarHeaders.notFound}
-                                </div>
-                                :
-                                <button onClick={Search}>{searchPageSideBarHeaders.tryAgain}</button>
-                                :
-                            keepActive?allMaterial.map(element =><Cards searchedText={query.get('search')} data={element} />)
-                            :
-                            <Tables searchedText={query.get('search')} columns={columns} data={allMaterial} showCheckbox={false} showDelete={false}/>
-                        }
-                        {
-                            loading||allMaterial.length===0||finished?null:<ShowMore onClick={handleShowMore}/>
-                        } */}
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
+                        <Cards/>
                     </Box>
                 </Box>
             </Box>

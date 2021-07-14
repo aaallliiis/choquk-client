@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useHistory} from "react-router-dom";
-import {Button,makeStyles,Grid,Collapse,Modal,Backdrop,Fade} from '@material-ui/core';
+import {Button,makeStyles,Grid,Collapse,Fade, Slide} from '@material-ui/core';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PersonIcon from '@material-ui/icons/Person';
@@ -20,42 +20,25 @@ const useStyles=makeStyles({
     borderRadius:'50%',
     backgroundColor:'white',
   },
-  profile:{
-    position:'absolute',
-    top:'9%',
-    right:'2%',
-    width:'15rem',
-    backgroundColor:'#ffff',
-    zIndex:'999',
-    borderRadius:'1rem',
-    boxSizing:'border-box',
-    padding:'1rem 2rem',
-    boxShadow:`1px 1px 20px -2px gray`
+  fade:{
+    display:'flex',
+    width:'95%',
+    justifyContent:'space-between',
+    marginRight:'1rem',
   },
-  triangle:{
-    position:'absolute',
-    top:0,
-    right:'3%',
-    borderTop:'0px solid transparent',
-    borderBottom:`1rem solid white`,
-    borderRight:'1rem solid transparent',
-    borderLeft:'1rem solid transparent',
-    transform:'translateY(-90%)',
-  },  
-  userName:{
-    textAlign:'center',
-    fontSize:'1.5rem',
-    marginBottom:'1rem'
+  divs:{
+    width:'20%'
   },
   row:{
     margin:'0.5rem 0',
+    width:'fit-content',
     cursor:'pointer',
     boxSizing:'border-box',
     padding:'0.2rem 1rem',
     borderRadius:'2rem',
     transition:'all 300ms ease',
     '&:hover':{
-      backgroundColor:'lightGray',
+      backgroundColor:'#Dbe0e5',
       color:'white'
     }
   },
@@ -64,9 +47,7 @@ const useStyles=makeStyles({
 export default function StyledCheckbox({handleClick}) {
   //* url history  
   const classes=useStyles();
-  const history = useHistory();
-  
-  const [open,setOpen]=useState(false)
+  const history = useHistory();  
 
   //? store user info
   const [userInfo,setUserInfo]=useState('')
@@ -81,27 +62,29 @@ export default function StyledCheckbox({handleClick}) {
   return (
     <React.Fragment>
       <Grid className={classes.main} container justify="flex-start" alignItems="center">
-        <Grid container direction="row" justify="center" alignItems="center" className={classes.profileImage} onClick={()=>{setOpen(!open)}}>
+        <Grid container direction="row" justify="center" alignItems="center" className={classes.profileImage}>
           <PersonIcon style={{fontSize:'2vw'}} />
         </Grid>
-        <Collapse className={classes.profile} in={open}>
-            <div>
-              <span className={classes.triangle}></span>
-              <div className={classes.userName}>{userInfo.name?`سلام ${userInfo.name}`:''}</div>
-              <Grid className={classes.row} container justify="flex-start" alignItems="center">
-                <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
-                {titles.profile}
-              </Grid>
-              <hr/>
-              <Grid className={classes.row} onClick={()=>{
+        <div className={classes.fade}>
+          <Grid className={classes.divs} container alignItems="center"> 
+            {userInfo.name?`سلام ${userInfo.name}`:''}
+          </Grid>
+          <Grid className={classes.divs} container alignItems="center"> 
+            <Grid className={classes.row} container justify="center" alignItems="center">
+              <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
+              {titles.profile}
+            </Grid>
+            <Grid className={classes.row} 
+              onClick={()=>{
                 localStorage.clear();
                 window.location.reload();
-              }} container justify="flex-start" alignItems="center">
-                <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
-                {titles.exit}
-              </Grid>
-            </div>
-        </Collapse>
+              }} container justify="center" alignItems="center"
+            >
+              <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
+              {titles.exit}
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
     </React.Fragment>
   );

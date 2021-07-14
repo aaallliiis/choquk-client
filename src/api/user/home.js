@@ -7,3 +7,7 @@ export function getUserData(){
 export function getAllFields(){
     return Axios.get('/fields').then(({data:{data}})=>data)
 }
+
+export function getAllFiles({query,number:offset}){
+    return Axios.post(`/files${query?`?${query}`:''}`,{offset}).then(({data:{data}})=>data)
+}

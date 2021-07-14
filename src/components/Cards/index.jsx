@@ -13,15 +13,41 @@ const useStyles = makeStyles({
     borderRadius:'2rem',
     cursor:'pointer',
   },
+  title:{
+    fontFamily:'vazir-regular',
+    fontSize:18,
+    fontWeight:'bold',
+    margin:2,
+    userSelect:'none'
+  },
+  description:{
+    fontFamily:'vazir-regular',
+    fontSize:16,
+    margin:'7px 10px 0px 0px',
+    userSelect:'none'
+  },
+  type:{
+    position:"absolute",
+    fontSize:14,
+    marginBottom:0,
+    bottom:10,
+    right:14,
+  },
 });
 
-export default function MediaCard(){
+export default function MediaCard({item:{title,type,description}}){
   const classes = useStyles();
 
   return (
     <Card className={classes.main}>
       <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
-        das
+        {title}
+      </Typography>
+      <Typography gutterBottom variant="div" component="div" className={classes.description}>
+        {description}
+      </Typography>
+      <Typography gutterBottom variant="div" component="div" className={classes.type}>
+        نوع : {type}
       </Typography>
     </Card>
   );

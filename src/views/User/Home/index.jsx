@@ -2,7 +2,7 @@ import React , {useEffect,useState} from 'react';
 import {Box,Divider,makeStyles ,Button} from '@material-ui/core';
 import Nav from '../../../components/NavBar';
 import Cards from '../../../components/Cards';
-import {getAllFields} from '../../../api';
+import {getAllFields,getAllFiles} from '../../../api';
 
 const useStyles = makeStyles({
     page:{
@@ -67,12 +67,16 @@ const useStyles = makeStyles({
 
 export default function Home(){
     const classes = useStyles();
+    const [firstTime,setFirstTime] = useState(true);
     const [fields,setFields] = useState([]);
+    const [files,setFiles] = useState([]);
+    const [number,setNumber] = useState(10);
     
     const [selectedFields,setSelectedFields] = useState([]);
     const [selectedCourses,setSelectedCourses] = useState([]);
 
     useEffect(()=>{
+        setFirstTime(false);
         getAllFields()
         .then(setFields)
         .catch(({response:{status}})=>{
@@ -82,6 +86,12 @@ export default function Home(){
             }
         })
     },[])
+
+    useEffect(()=>{
+        getAllFiles({number})
+        .then(setFiles)
+        .catch(({response})=>console.log(response))
+    },[number])
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
@@ -151,23 +161,9 @@ export default function Home(){
                     </Box>
                     {/* //? materail table and card section */}
                     <Box className={classes.content} height="85%" width="100%">
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
-                        <Cards/>
+                        {files.map(item=>
+                            <Cards item={item}/>
+                        )}
                     </Box>
                 </Box>
             </Box>

@@ -1,8 +1,9 @@
 import React , {useEffect,useState} from 'react';
-import {Box,Divider,makeStyles ,Button} from '@material-ui/core';
+import {Box,Divider,makeStyles,Grid,Button} from '@material-ui/core';
 import Nav from '../../../components/NavBar';
 import Cards from '../../../components/Cards';
 import {getAllFields,getAllFiles} from '../../../api';
+import SearchBox from '../../../components/SearchBox';
 
 const useStyles = makeStyles({
     page:{
@@ -62,6 +63,25 @@ const useStyles = makeStyles({
         paddingTop:'1rem',
         paddingBottom:'3rem',
         paddingRight:'6%'
+    },
+    searchboxContainer:{
+        position:'relative',
+        display:'flex',
+        justifyContent:'space-around',
+        alignItems:'center',
+        boxSizing:'border-box',
+        padding:'1rem',
+        backgroundColor:'white',
+        borderRadius:'1rem',
+        boxShadow:'-1px -1px 20px 0px #aaaaaa',
+        overflow:'hidden',
+    },
+    searchbox:{
+        backgroundColor: 'transparent',
+        boxSizing:'border-box',
+        padding:'1rem 2rem',
+        display:'flex',
+        alignItems:'center',
     },
 })
 
@@ -159,22 +179,11 @@ export default function Home(){
                     {/* //? search bar section */}
                     <Box className={classes.searchbox} height="15%" width="100%">
                         <Box className={classes.searchboxContainer} width="100%" height="100%">
-                            {/* <Grid container justify="space-between" wrap='nowrap' alignItems="center">
+                            <Grid container justify="space-between" wrap='nowrap' alignItems="center">
                                 <SearchBox
-                                handleSearch={handleSearchBox}
-                                history={[]}
-                                text={searchBody.search_Text}/>
-                                <SwitchBotton 
-                                handldeChange={handleSwitchChange} 
-                                checked={searchBody.isStatement} 
-                                lable={searchPageSideBarHeaders.algebraic_search} width="20%"
+                                    handleSearch={setSearchText}
                                 />
-                                <SwitchBotton
-                                handldeChange={handleFileNameFilterSwitchChange} 
-                                checked={searchBody.file_name_filter} 
-                                lable={searchPageSideBarHeaders.file_name_filter} width="20%"
-                                />
-                            </Grid> */}
+                            </Grid>
                         </Box>
                     </Box>
                     {/* //? materail table and card section */}

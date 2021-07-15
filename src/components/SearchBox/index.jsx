@@ -11,9 +11,12 @@ const useStyles = makeStyles({
     marginBottom:5,
     '& .MuiOutlinedInput-root':{
       borderRadius:50,
-      '& .MuiOutlinedInput-root:hover':{
-        backgroundColor:'red'
-      }
+      '& fieldset': {
+        borderColor:'white',
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaaaaa',
+      },
     },
   },
   icon:{
@@ -21,8 +24,8 @@ const useStyles = makeStyles({
     borderRadius:50,
     width:30,
     height:30,
-    transform:'translateX(130%)'
-  }
+    transform:'translateX(160%)'
+  },
 })
 
 export default function SearchBox({handleSearch}) {
@@ -62,7 +65,10 @@ export default function SearchBox({handleSearch}) {
         style={{ width: "100%" }}
         hiddenLabel="true"
         onInputChange={(event, newInputValues)=>setInputValue(newInputValues)}
-        renderInput={params => <TextField placeholder="جستجو کنید ..." {...params}  variant="outlined" />
+        renderInput={params => <TextField className={classes.text} style={{
+          backgroundColor:'white',
+          borderRadius:50,
+        }} placeholder="جستجو کنید ..." {...params}  variant="outlined" />
         }
         onKeyPress={handleKeyPres}
       />

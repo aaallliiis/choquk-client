@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     height:125,
     position:"relative",
     padding:'1.5rem',
-    borderRadius:'2rem',
+    borderRadius:'0.5rem',
     cursor:'pointer',
   },
   title:{

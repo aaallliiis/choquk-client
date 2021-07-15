@@ -63,18 +63,19 @@ const useStyles = makeStyles({
         boxSizing:'border-box',
         paddingTop:'1rem',
         paddingBottom:'3rem',
-        paddingRight:'6%'
-    },
-    searchboxContainer:{
-        position:'relative',
-        display:'flex',
-        justifyContent:'space-around',
-        alignItems:'center',
-        boxSizing:'border-box',
-        backgroundColor:'white',
-        borderRadius:'1rem',
-        boxShadow:'-1px -1px 20px 0px #aaaaaa',
-        overflow:'hidden',
+        paddingRight:'6%',
+        '&::-webkit-scrollbar':{
+            height:'1.2vh',
+            width:10
+        },
+        '&::-webkit-scrollbar-track':{
+            background: '#cccccc',
+            borderRadius:20,
+        },
+        '&::-webkit-scrollbar-thumb':{
+            background: '#AAAAAA',
+            borderRadius:20,
+        }
     },
     searchbox:{
         backgroundColor: 'transparent',
@@ -84,6 +85,30 @@ const useStyles = makeStyles({
         alignItems:'center',
         justifyContent:'center'
     },
+    box:{
+        backgroundColor:'white',
+        boxSizing:'border-box',
+        padding:'0.5rem',
+        borderRadius:'0.5rem',
+        boxShadow: `-1px -1px 20px 0px #aaaaaa`,
+    },
+    courseBox:{
+        height:'80%',
+        overflowY:'auto',
+        overflowX:'hidden',
+        '&::-webkit-scrollbar':{
+            height:'1.2vh',
+            width:5
+        },
+        '&::-webkit-scrollbar-track':{
+            background: '#cccccc',
+            borderRadius:20,
+        },
+        '&::-webkit-scrollbar-thumb':{
+            background: '#AAAAAA',
+            borderRadius:20,
+        }
+    }
 })
 
 export default function Home(){
@@ -143,7 +168,7 @@ export default function Home(){
                     <div style={{textAlign:"center",marginBottom:10,fontWeight:'bolder'}}>رشته ها و درس ها</div>
                     <Divider/>
                     {fields.map(({name,_id,courses})=>
-                        <React.Fragment>
+                        <Box className={classes.box} padding='0.2rem' marginTop="1rem" width="100%" height={250}>
                             <Button 
                                 onClick={()=>{
                                     if(selectedFields.includes(_id))
@@ -157,29 +182,166 @@ export default function Home(){
                                     {name}
                                 </div>
                             </Button>
-                            {courses.map(({name,_id})=>
-                                <Button 
-                                    onClick={()=>{
-                                        if(selectedCourses.includes(_id))
-                                            setSelectedCourses(old=>old.filter(item=>item!==_id))
-                                        else
-                                            setSelectedCourses(old=>([...old,_id]))
-                                    }} 
-                                    className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
-                                >
-                                    <div className={classes.courseDiv}>
-                                        {name}
-                                    </div>
-                                </Button>
-                            )}
-                        </React.Fragment>
+                            <Box className={classes.courseBox}>
+                                {courses.map(({name,_id})=>
+                                        <Button 
+                                            onClick={()=>{
+                                                if(selectedCourses.includes(_id))
+                                                    setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                                else
+                                                    setSelectedCourses(old=>([...old,_id]))
+                                            }} 
+                                            className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                        >
+                                            <div className={classes.courseDiv}>
+                                                {name}
+                                            </div>
+                                        </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                                {courses.map(({name,_id})=>
+                                    <Button 
+                                        onClick={()=>{
+                                            if(selectedCourses.includes(_id))
+                                                setSelectedCourses(old=>old.filter(item=>item!==_id))
+                                            else
+                                                setSelectedCourses(old=>([...old,_id]))
+                                        }} 
+                                        className={`${selectedCourses.includes(_id)?classes.active:''} ${classes.courseBtn}`} 
+                                    >
+                                        <div className={classes.courseDiv}>
+                                            {name}
+                                        </div>
+                                    </Button>
+                                )}
+                            </Box>
+                        </Box>
                     )}
                 </Box>
                 { /*//?  show cards and tables and a button to change  */}
                 <Box className={classes.right} height="100%" width="83%">
                     {/* //? search bar section */}
                     <Box className={classes.searchbox} height="15%" width="100%">
-                        <Box className={classes.searchboxContainer} width="90%" height="100%">
+                        <Box width="95%" height="100%">
                             <SearchBox
                                 handleSearch={setSearchText}
                             />

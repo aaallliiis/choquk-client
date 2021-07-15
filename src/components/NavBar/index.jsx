@@ -27,7 +27,9 @@ const useStyles=makeStyles({
     marginRight:'1rem',
   },
   divs:{
-    width:'20%'
+    width:'25%',
+    display:'flex',
+    alignItems:'center',
   },
   row:{
     margin:'0.5rem 0',
@@ -66,10 +68,10 @@ export default function StyledCheckbox({handleClick}) {
           <PersonIcon style={{fontSize:'2vw'}} />
         </Grid>
         <div className={classes.fade}>
-          <Grid className={classes.divs} container alignItems="center"> 
+          <div className={classes.divs} > 
             {userInfo.name?`سلام ${userInfo.name}`:''}
-          </Grid>
-          <Grid className={classes.divs} container alignItems="center"> 
+          </div>
+          <div className={classes.divs} style={{justifyContent:'flex-end'}}> 
             <Grid className={classes.row} container justify="center" alignItems="center">
               <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
               {titles.profile}
@@ -83,7 +85,7 @@ export default function StyledCheckbox({handleClick}) {
               <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
               {titles.exit}
             </Grid>
-          </Grid>
+          </div>
         </div>
       </Grid>
     </React.Fragment>

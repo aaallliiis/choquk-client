@@ -68,12 +68,24 @@ const useStyles = makeStyles({
 export default function Home(){
     const classes = useStyles();
     const [firstTime,setFirstTime] = useState(true);
+    const [finished,setFinished] = useState(false);
     const [fields,setFields] = useState([]);
     const [files,setFiles] = useState([]);
     const [number,setNumber] = useState(10);
     
     const [selectedFields,setSelectedFields] = useState([]);
     const [selectedCourses,setSelectedCourses] = useState([]);
+    const [selectedProf,setSelectedProf] = useState('');
+    const [searchText,setSearchText] = useState('');
+
+    const Search = ()=>{
+        getAllFiles({number,fieldId:selectedFields,courseId:selectedCourses,profId:selectedProf,search:searchText})
+        .then(res=>{
+            setFiles(old=>([...old,...res]))
+            setFinished(res.length<10);
+        })
+        .catch(({response})=>console.log(response))
+    }
 
     useEffect(()=>{
         setFirstTime(false);
@@ -87,11 +99,17 @@ export default function Home(){
         })
     },[])
 
+    useEffect(Search,[number])
+
     useEffect(()=>{
-        getAllFiles({number})
-        .then(setFiles)
-        .catch(({response})=>console.log(response))
-    },[number])
+        if(!firstTime){
+            setFiles([]);
+            if(number===10)
+                Search();
+            else
+                setNumber(10);
+        }
+    },[selectedFields,selectedCourses,selectedProf,searchText])
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
@@ -164,6 +182,7 @@ export default function Home(){
                         {files.map(item=>
                             <Cards item={item}/>
                         )}
+                        {(!firstTime&&!finished)&&<Button onClick={()=>setNumber(old=>old+10)}> mmd</Button>}
                     </Box>
                 </Box>
             </Box>

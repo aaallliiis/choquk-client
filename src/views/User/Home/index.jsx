@@ -4,6 +4,7 @@ import Nav from '../../../components/NavBar';
 import Cards from '../../../components/Cards';
 import {getAllFields,getAllFiles} from '../../../api';
 import SearchBox from '../../../components/SearchBox';
+import ShowMore from '../../../components/ShowMore';
 
 const useStyles = makeStyles({
     page:{
@@ -70,7 +71,6 @@ const useStyles = makeStyles({
         justifyContent:'space-around',
         alignItems:'center',
         boxSizing:'border-box',
-        padding:'1rem',
         backgroundColor:'white',
         borderRadius:'1rem',
         boxShadow:'-1px -1px 20px 0px #aaaaaa',
@@ -82,6 +82,7 @@ const useStyles = makeStyles({
         padding:'1rem 2rem',
         display:'flex',
         alignItems:'center',
+        justifyContent:'center'
     },
 })
 
@@ -178,12 +179,10 @@ export default function Home(){
                 <Box className={classes.right} height="100%" width="83%">
                     {/* //? search bar section */}
                     <Box className={classes.searchbox} height="15%" width="100%">
-                        <Box className={classes.searchboxContainer} width="100%" height="100%">
-                            <Grid container justify="space-between" wrap='nowrap' alignItems="center">
-                                <SearchBox
-                                    handleSearch={setSearchText}
-                                />
-                            </Grid>
+                        <Box className={classes.searchboxContainer} width="90%" height="100%">
+                            <SearchBox
+                                handleSearch={setSearchText}
+                            />
                         </Box>
                     </Box>
                     {/* //? materail table and card section */}
@@ -191,7 +190,7 @@ export default function Home(){
                         {files.map(item=>
                             <Cards item={item}/>
                         )}
-                        {(!firstTime&&!finished)&&<Button onClick={()=>setNumber(old=>old+10)}> mmd</Button>}
+                        {(!firstTime&&!finished)&&<ShowMore onClick={()=>setNumber(old=>old+10)}/>}
                     </Box>
                 </Box>
             </Box>

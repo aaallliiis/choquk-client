@@ -6,8 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   searchBox:{
-    marginRight:50,
+    marginRight:30,
     marginTop:5,
+    marginBottom:5,
     '& .MuiOutlinedInput-root':{
       borderRadius:50,
       '& .MuiOutlinedInput-root:hover':{

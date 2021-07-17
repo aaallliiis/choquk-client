@@ -49,7 +49,7 @@ export default function MediaCard({item:{_id,title,type,description}}){
         {description}
       </Typography>
       <Typography gutterBottom variant="div" component="div" className={classes.type}>
-        نوع : {type}
+        نوع : {type==='PDF'?'پی دی اف':type==='IMG'?'عکس':type==='VID'?'فیلم':type==='VC'?'صوت':null}
       </Typography>
     </Card>
   );

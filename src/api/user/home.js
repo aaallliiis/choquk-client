@@ -23,3 +23,8 @@ export function getAllFiles({
         search
     }).then(({data:{data}})=>data)
 }
+
+
+export function getFileById(id){
+    return Axios.get(`/files/${id}`).then(({data:{data}})=>data)
+}

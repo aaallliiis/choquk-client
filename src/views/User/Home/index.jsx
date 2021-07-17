@@ -159,7 +159,7 @@ export default function Home(){
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
-            <Box className={classes.navbar} height="8%" width="100%">
+            <Box height="8%" width="100%">
                 <Nav handleClick={()=>console.log('mmd')}/>
             </Box>
             <Box className={classes.main} height="92%" width="100%">
@@ -214,9 +214,9 @@ export default function Home(){
                     </Box>
                     {/* //? materail table and card section */}
                     <Box className={classes.content} height="85%" width="100%">
-                        {files.map(item=>
+                        {files.length>0?files.map(item=>
                             <Cards item={item}/>
-                        )}
+                        ):<h3 style={{textAlign:'center',width:'100%'}}>پیدا نشد</h3>}
                         {(!firstTime&&!finished)&&<ShowMore onClick={()=>setNumber(old=>old+10)}/>}
                     </Box>
                 </Box>

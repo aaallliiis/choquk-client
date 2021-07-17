@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
   main: {
@@ -35,11 +36,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({item:{title,type,description}}){
+export default function MediaCard({item:{_id,title,type,description}}){
   const classes = useStyles();
+  const {push} = useHistory();
 
   return (
-    <Card className={classes.main}>
+    <Card className={classes.main} onClick={()=>push(`/file/${_id}`)}>
       <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
         {title}
       </Typography>

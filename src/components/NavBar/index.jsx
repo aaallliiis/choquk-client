@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useHistory} from "react-router-dom";
-import {Button,makeStyles,Grid,Collapse,Fade, Slide} from '@material-ui/core';
+import {makeStyles,Grid,Tooltip} from '@material-ui/core';
+import {Home} from '@material-ui/icons';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PersonIcon from '@material-ui/icons/Person';
@@ -27,17 +28,16 @@ const useStyles=makeStyles({
     marginRight:'1rem',
   },
   divs:{
-    width:'25%',
+    width:'30%',
     display:'flex',
     alignItems:'center',
   },
   row:{
     margin:'0.5rem 0',
-    width:'fit-content',
+    width:'15%',
     cursor:'pointer',
     boxSizing:'border-box',
-    padding:'0.2rem 1rem',
-    borderRadius:'2rem',
+    borderRadius:'3rem',
     transition:'all 300ms ease',
     '&:hover':{
       backgroundColor:'#Dbe0e5',
@@ -49,7 +49,7 @@ const useStyles=makeStyles({
 export default function StyledCheckbox({handleClick}) {
   //* url history  
   const classes=useStyles();
-  const history = useHistory();  
+  const {push,location:{pathname}} = useHistory();  
 
   //? store user info
   const [userInfo,setUserInfo]=useState('')
@@ -72,18 +72,25 @@ export default function StyledCheckbox({handleClick}) {
             {userInfo.name?`سلام ${userInfo.name}`:''}
           </div>
           <div className={classes.divs} style={{justifyContent:'flex-end'}}> 
-            <Grid className={classes.row} container justify="center" alignItems="center">
-              <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
-              {titles.profile}
+            {pathname!=='/'&&<Grid className={classes.row} container justify="flex-end" alignItems="center" onClick={()=>push('/')}>
+              <Tooltip arrow title={titles.home}>
+                <Home style={{marginLeft:'0.5rem'}} />
+              </Tooltip>
+            </Grid>}
+            <Grid className={classes.row} container justify="flex-end" alignItems="center">
+              <Tooltip arrow title={titles.profile}>
+                <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
+              </Tooltip>
             </Grid>
             <Grid className={classes.row} 
               onClick={()=>{
                 localStorage.clear();
                 window.location.reload();
-              }} container justify="center" alignItems="center"
+              }} container justify="flex-end" alignItems="center"
             >
-              <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
-              {titles.exit}
+              <Tooltip arrow title={titles.exit}>
+                <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
+              </Tooltip>
             </Grid>
           </div>
         </div>

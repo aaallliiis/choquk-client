@@ -9,6 +9,8 @@ import { errorsMessages } from '../../../assets/errorsMessages';
 import { snackbarTypes } from '../../../assets/snackbarTypes';
 import { userLables } from '../../../assets/userLables';
 import Snackbar from '../../../components/Snackbar';
+import DatePicker from 'react-modern-calendar-datepicker';
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 const useStyles = makeStyles({
     page:{
@@ -72,10 +74,14 @@ const useStyles = makeStyles({
           backgroundColor:`#00b000 !important`,
         }
     },
-    error:{
+    err:{
         color: '#f5222d',
         marginBottom: '8px',
         textAlign: 'revert',
+    },
+    cal:{
+        width:'76%',
+        right:-21
     }
 })
 
@@ -90,6 +96,7 @@ export default function Home(){
     const [snackOpen,setSnackOpen]=useState(false);
     const [msg,setMsg]=useState('');
     const [type,setType]=useState('');
+    const [persianNum,setPersianNum]= useState(false)
     
     const handleSnackOpen = (mesg,type)=>{
         setMsg(mesg);
@@ -107,14 +114,16 @@ export default function Home(){
             userInfo.uniCode===""||
             userInfo.phoneNumber===""||
             userInfo.email===""||
-            userInfo.field._id===""||
-            userInfo.orientation._id===""
+            userInfo.field===""||
+            userInfo.orientation===""||
+            userInfo.birthDate===""
         ){
             handleSnackOpen(errorsMessages.emptyField,snackbarTypes.error)
         }else{
             let err=false;
-            const phonePattern = new RegExp(/09[0-9]{9}||۰۹[۰-۹]{9}/)
-            if(!phonePattern.test(userInfo.phoneNumber)){
+            const phonePattern = new RegExp(/09[0-9]{9}/)
+            const perPhonePattern = new RegExp(/۰۹[۰-۹]{9}/)
+            if(!(phonePattern.test(userInfo.phoneNumber)||perPhonePattern.test(userInfo.phoneNumber))){
                 err=true;
                 handleSnackOpen(old=>(`${old}:${errorsMessages.invalidPhone}`),snackbarTypes.error);
             }
@@ -154,7 +163,13 @@ export default function Home(){
         .then(setFields)
         .then(()=>
             getUserData(id)
-            .then(res=>{
+            .then(res=>{                
+                res.birthDate=res.birthDate.split('&#x2F;').join('/');
+                res.rawBirthDate={
+                    year:+res.birthDate.split('/')[0],
+                    month:+res.birthDate.split('/')[1],
+                    day:+res.birthDate.split('/')[2],
+                };
                 getAllOrientations(res.field)
                 .then(setOrientations)
                 .then(()=>setUserInfo(res))
@@ -219,6 +234,25 @@ export default function Home(){
                                     />
                                 </Grid>
                                 <Grid container alignItems="center" justify='space-between' className={classes.inputBox}>
+                                    <label>{userLables.birthDate} : </label>
+                                    <DatePicker
+                                        colorPrimary="#577AFF"
+                                        onChange={(e) =>setUserInfo(old=>({...old,rawBirthDate:e,birthDate:`${e.year}/${e.month}/${e.day}`}))}
+                                        value={userInfo.rawBirthDate}
+                                        locale="fa"
+                                        variant="outlined"
+                                        wrapperClassName={classes.cal}
+                                        renderInput={({ ref })=>
+                                            <input
+                                                ref={ref}
+                                                className={classes.input}
+                                                style={{width:'100%'}}
+                                                value={userInfo.birthDate}
+                                            />
+                                        }
+                                    />
+                                </Grid>
+                                <Grid container alignItems="center" justify='space-between' className={classes.inputBox}>
                                     <label>{userLables.field} : </label>
                                     <Select
                                         className={classes.select}
@@ -256,16 +290,21 @@ export default function Home(){
                                         }}
                                         maxLength={11}
                                         onKeyDown={(e)=>{
+                                            if(e.key.match(/^[۰-۹]+$/))
+                                                setPersianNum(true);
+                                            else
+                                                setPersianNum(false);
                                             if(
-                                                !e.key.match(/^[۰-۹0-9]+$/)&&
-                                                e.key!=='Backspace'&&
-                                                e.key!=='ArrowLeft'&&
-                                                e.key!=='ArrowRight'
+                                                !e.key.match(/^[0-9]+$/)
+                                                &&e.key!=='Backspace'
+                                                &&e.key!=='ArrowLeft'
+                                                &&e.key!=='ArrowRight'
                                             )
                                                 e.preventDefault()
                                         }}
                                     />
                                 </Grid>
+                                {persianNum&&<p className={classes.err}>زبان صفحه کلید خود را انگلیسی کنید</p>}
                                 <Grid container alignItems="center" justify='space-between' className={classes.inputBox}>
                                     <label>{userLables.password} : </label>
                                     <input

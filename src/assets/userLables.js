@@ -4,6 +4,7 @@ export const userLables = {
   lastName:'نام خانوادگی',
   orientation: 'گرایش',
   password: 'رمز عبور',
+  birthDate: 'تاریخ تولد',
   uniCode:"شماره دانشجویی",
   phoneNumber:"شماره تماس",
   email:"ایمیل",

@@ -80,10 +80,11 @@ const useStyles = makeStyles({
             transform:'translateX(100%)'
         },
     },
-    cal:{
-        lineHeight: 0,
-        border: 'none',
-        borderBottom: '1px solid #f2f2f2 !important',
+    err:{
+        color: '#f5222d',
+        marginBottom:'8px',
+        textAlign:'revert',
+        direction:'rtl',
     }
 })
 
@@ -96,6 +97,7 @@ export default function Register(){
     const [orientations,setOrientations] = useState([]);
     const [snackOpen,setSnackOpen]=useState(false);
     const [msg,setMsg]=useState('');
+    const [persianNum,setPersianNum]= useState(false)
     const [type,setType]=useState('');
 
     const [body,setBody]= useState({
@@ -154,8 +156,7 @@ export default function Register(){
             }
             
             const phonePattern = new RegExp(/09[0-9]{9}/)
-            const perPhonePattern = new RegExp(/۰۹[۰-۹]{9}/)
-            if(!(phonePattern.test(body.phoneNumber)||perPhonePattern.test(body.phoneNumber))){
+            if(!(phonePattern.test(body.phoneNumber))){
                 err=true;
                 handleSnackOpen(old=>(`${old}:${errorsMessages.invalidPhone}`),snackbarTypes.error);
             }
@@ -169,7 +170,7 @@ export default function Register(){
             if(!err){
                 register(body)
                 .then(()=>history.push('/verification',{phoneNumber:body.phoneNumber}))
-                .catch(({response:{data:{error}}})=>handleSnackOpen(error.join(':'),snackbarTypes.error))
+                .catch(({response:{data:{error}}})=>Array.isArray(error)?handleSnackOpen(error.join(':'),snackbarTypes.error):handleSnackOpen(error,snackbarTypes.error))
             }
         }
     }
@@ -222,8 +223,12 @@ export default function Register(){
                                     maxLength:11
                                 }}
                                 onKeyDown={(e)=>{
+                                    if(e.key.match(/^[۰-۹]+$/))
+                                        setPersianNum(true);
+                                    else
+                                        setPersianNum(false);
                                     if(
-                                        !e.key.match(/^[0-9۰-۹]+$/)
+                                        !e.key.match(/^[0-9]+$/)
                                         &&e.key!=='Backspace'
                                         &&e.key!=='ArrowLeft'
                                         &&e.key!=='ArrowRight'
@@ -233,6 +238,7 @@ export default function Register(){
                                 onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
                             />
                         </div>
+                        {persianNum&&<p className={classes.err}>زبان صفحه کلید خود را انگلیسی کنید</p>}
                         <div className={classes.inputDiv}>
                             <lable>رمزعبور</lable>
                             <TextField className={classes.inputs} label="رمزعبور" type={showPassword?'text':'password'} required 

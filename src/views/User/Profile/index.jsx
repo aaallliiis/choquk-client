@@ -155,7 +155,7 @@ export default function Home(){
         .then(()=>
             getUserData(id)
             .then(res=>{
-                getAllOrientations(res.field._id)
+                getAllOrientations(res.field)
                 .then(setOrientations)
                 .then(()=>setUserInfo(res))
                 .then(()=>setLoading(false))
@@ -222,9 +222,9 @@ export default function Home(){
                                     <label>{userLables.field} : </label>
                                     <Select
                                         className={classes.select}
-                                        value={userInfo.field._id}
+                                        value={userInfo.field}
                                         onChange={({target:{value}})=>{
-                                            setUserInfo(old=>({...old,field:{_id:value}}))
+                                            setUserInfo(old=>({...old,field:value}))
                                             getAllOrientations(value)
                                             .then(setOrientations)
                                         }}
@@ -281,9 +281,9 @@ export default function Home(){
                                     <label>{userLables.orientation} : </label>
                                     <Select 
                                         className={classes.select}
-                                        value={userInfo.orientation._id}
+                                        value={userInfo.orientation}
                                         onChange={({target:{value}})=>{
-                                            setUserInfo(old=>({...old,orientation:{_id:value}}))
+                                            setUserInfo(old=>({...old,orientation:value}))
                                         }}
                                     >
                                         {orientations.map(item=>

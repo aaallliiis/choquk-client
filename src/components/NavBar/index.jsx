@@ -10,6 +10,7 @@ import {getUserData} from '../../api';
 
 const useStyles=makeStyles({
   main:{
+    minHeight:'100%',
     height:'fit-content',
     boxSizing:'border-box',
     padding:'0 2rem',

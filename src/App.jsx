@@ -12,6 +12,7 @@ import { Box } from '@material-ui/core';
 import { useEffect } from 'react';
 import Home from './views/User/Home';
 import File from './views/User/File';
+import Profile from './views/User/Profile';
 import Admin from './views/Admin';
 
 function App() {
@@ -36,6 +37,12 @@ function App() {
           <Route exact path="/file/:id">
             {isLoggedIn?
               <File/>:
+              <Redirect to='/login'/>
+            }
+          </Route>
+          <Route exact path="/profile/:id">
+            {isLoggedIn?
+              <Profile/>:
               <Redirect to='/login'/>
             }
           </Route>

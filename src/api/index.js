@@ -1,5 +1,5 @@
 import {register,login,verification,sendVerificationCode} from './user/auth';
-import {getUserData,getAllFields,getAllFiles,getFileById} from './user/home';
+import {getUserData,getAllFields,getAllFiles,getFileById,getAllOrientations,updateUser} from './user/home';
 
 import {adminLogin} from './admin/auth';
 
@@ -12,5 +12,7 @@ export{
   getUserData,
   getAllFields,
   getAllFiles,
-  getFileById
+  getFileById,
+  getAllOrientations,
+  updateUser
 }

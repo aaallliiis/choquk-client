@@ -41,6 +41,12 @@ const useStyles = makeStyles({
     inputs:{
         width:'100%',
         direction:'ltr'
+    },
+    err:{
+        color: '#f5222d',
+        marginBottom:'8px',
+        textAlign:'revert',
+        direction:'rtl',
     }
 })
 
@@ -50,6 +56,8 @@ export default function Verification(){
     const history = useHistory();
 
     const [status,setStatus]= useState(false)
+    const [persianNum,setPersianNum]= useState(false)
+    const [phonePersianNum,setPhonePersianNum]= useState(false)
 
     const [body,setBody]= useState({
         phoneNumber:state?state.phoneNumber:'',
@@ -78,9 +86,23 @@ export default function Verification(){
         if (body.phoneNumber===''||body.token==='') {
             handleOpenSnack(errorsMessages.emptyField,snackbarTypes.error);
         }else{
-            verification(body)
-            .then(()=>history.push('/login'))
-            .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
+            let err = false;
+            const phonePattern = new RegExp(/09[0-9]{9}/)
+            if(!(phonePattern.test(body.phoneNumber))){
+                err=true;
+                handleOpenSnack(errorsMessages.invalidPhone,snackbarTypes.error);
+            }
+
+            if(body.token.length<6){
+                err=true;
+                handleOpenSnack(errorsMessages.invalidToken,snackbarTypes.error);
+            }
+
+            if(!err){
+                verification(body)
+                .then(()=>history.push('/login'))
+                .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
+            }
         }
     }
 
@@ -88,12 +110,22 @@ export default function Verification(){
         if(body.phoneNumber===''){
             handleOpenSnack(errorsMessages.emptyField,snackbarTypes.error);
         }else{
-            sendVerificationCode({phoneNumber:body.phoneNumber})
-            .then(({data})=>{
-                handleOpenSnack(data,snackbarTypes.success);
-                setStatus(true);
-            })
-            .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
+            let err = false;
+
+            const phonePattern = new RegExp(/09[0-9]{9}/)
+            if(!(phonePattern.test(body.phoneNumber))){
+                err=true;
+                handleOpenSnack(errorsMessages.invalidPhone,snackbarTypes.error);
+            }
+
+            if(!err){
+                sendVerificationCode({phoneNumber:body.phoneNumber})
+                .then(({data})=>{
+                    handleOpenSnack(data,snackbarTypes.success);
+                    setStatus(true);
+                })
+                .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))
+            }
         }
     }
 
@@ -110,9 +142,32 @@ export default function Verification(){
                             <TextField className={classes.inputs} label="شماره همراه" required
                                 variant="outlined" 
                                 defaultValue={body.phoneNumber}
+                                inputProps={{
+                                    maxLength:11
+                                }}
+                                onKeyDown={(e)=>{
+                                    if(e.key==='Enter'){
+                                        if(status)
+                                            handleVerification()
+                                        else
+                                            handleSendCode()
+                                    }
+                                    if(e.key.match(/^[۰-۹]+$/))
+                                        setPhonePersianNum(true);
+                                    else
+                                        setPhonePersianNum(false);
+                                    if(
+                                        !e.key.match(/^[0-9]+$/)
+                                        &&e.key!=='Backspace'
+                                        &&e.key!=='ArrowLeft'
+                                        &&e.key!=='ArrowRight'
+                                    )
+                                        e.preventDefault()
+                                }}
                                 onChange={({target:{value}})=>setBody(old=>{return{...old,phoneNumber:value}})}
                             />
                         </div>
+                        {phonePersianNum&&<p className={classes.err}>زبان صفحه کلید خود را انگلیسی کنید</p>}
                         {status?
                             <React.Fragment>
                                 <div className={classes.inputDiv}>
@@ -120,8 +175,27 @@ export default function Verification(){
                                     <TextField className={classes.inputs} label="کد" required 
                                         variant="outlined" 
                                         onChange={({target:{value}})=>setBody(old=>{return{...old,token:value}})}
+                                        inputProps={{
+                                            maxLength:6
+                                        }}
+                                        onKeyDown={(e)=>{
+                                            if(e.key==='Enter')
+                                                handleVerification()
+                                            if(e.key.match(/^[۰-۹]+$/))
+                                                setPersianNum(true);
+                                            else
+                                                setPersianNum(false);
+                                            if(
+                                                !e.key.match(/^[0-9]+$/)
+                                                &&e.key!=='Backspace'
+                                                &&e.key!=='ArrowLeft'
+                                                &&e.key!=='ArrowRight'
+                                            )
+                                                e.preventDefault()
+                                        }}
                                     />
                                 </div>
+                                {persianNum&&<p className={classes.err}>زبان صفحه کلید خود را انگلیسی کنید</p>}
                                 <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleVerification} >فعال سازی</Button>
                             </React.Fragment>:
                             <Button style={{backgroundColor:'rgba(87,122,255,87%)',width:'77%',marginTop:15}} onClick={handleSendCode} >ارسال کد</Button>

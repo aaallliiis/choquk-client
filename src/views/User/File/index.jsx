@@ -5,11 +5,6 @@ import Nav from '../../../components/NavBar';
 import {getFileById} from '../../../api';
 import {Link, useHistory,useRouteMatch} from 'react-router-dom';
 import { titles } from '../../../assets/titles';
-import war from '../../../assets/war.mp3';
-import war4 from '../../../assets/war.mp4';
-import warP from '../../../assets/war.pdf';
-
-import { Document, Page } from 'react-pdf';
 
 const useStyles = makeStyles({
     page:{
@@ -39,13 +34,7 @@ export default function Home(){
     const {params:{id}} = useRouteMatch();
     const {goBack} = useHistory();
     const [item,setItem] = useState({});
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
   
-    const onDocumentLoadSuccess = ({ numPages }) => {
-      setNumPages(numPages);
-    }
-
     useEffect(()=>
         getFileById(id)
         .then(setItem)
@@ -55,7 +44,7 @@ export default function Home(){
     return (        
         <Box className={classes.page} height="100%" width="100%">            
             <Box height="8%" width="100%">
-                <Nav handleClick={()=>console.log('mmd')}/>
+                <Nav/>
             </Box>
             <Box height="92%" width="100%">
                 <Box padding="2rem">

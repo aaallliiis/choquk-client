@@ -10,7 +10,7 @@ import {getUserData} from '../../api';
 
 const useStyles=makeStyles({
   main:{
-    height:'100%',
+    height:'fit-content',
     boxSizing:'border-box',
     padding:'0 2rem',
     backgroundColor:'rgba(128, 182, 202, 60%)'
@@ -28,13 +28,16 @@ const useStyles=makeStyles({
     marginRight:'1rem',
   },
   divs:{
-    width:'30%',
+    width:'fit-content',
     display:'flex',
     alignItems:'center',
+    justifyContent:'space-between'
   },
   row:{
     margin:'0.5rem 0',
-    width:'15%',
+    padding:'0.3rem',
+    display:'flex',
+    justifyContent:'flex-end',
     cursor:'pointer',
     boxSizing:'border-box',
     borderRadius:'3rem',
@@ -71,27 +74,27 @@ export default function StyledCheckbox({handleClick}) {
           <div className={classes.divs} > 
             {userInfo.name?`سلام ${userInfo.name}`:''}
           </div>
-          <div className={classes.divs} style={{justifyContent:'flex-end'}}> 
-            {pathname!=='/'&&<Grid className={classes.row} container justify="flex-end" alignItems="center" onClick={()=>push('/')}>
+          <div className={classes.divs}> 
+            {pathname!=='/'&&<div className={classes.row} onClick={()=>push('/')}>
               <Tooltip arrow title={titles.home}>
-                <Home style={{marginLeft:'0.5rem'}} />
+                <Home />
               </Tooltip>
-            </Grid>}
-            <Grid className={classes.row} container justify="flex-end" alignItems="center">
+            </div>}
+            <div className={classes.row} onClick={()=>push(`/profile/${userInfo._id}`)}>
               <Tooltip arrow title={titles.profile}>
-                <AccountCircleRoundedIcon style={{marginLeft:'0.5rem'}} />
+                <AccountCircleRoundedIcon />
               </Tooltip>
-            </Grid>
-            <Grid className={classes.row} 
+            </div>
+            <div className={classes.row} 
               onClick={()=>{
                 localStorage.clear();
                 window.location.reload();
               }} container justify="flex-end" alignItems="center"
             >
               <Tooltip arrow title={titles.exit}>
-                <ExitToAppRoundedIcon style={{marginLeft:'0.5rem'}}/>
+                <ExitToAppRoundedIcon/>
               </Tooltip>
-            </Grid>
+            </div>
           </div>
         </div>
       </Grid>

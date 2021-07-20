@@ -160,7 +160,7 @@ export default function Home(){
     return (
         <Box className={classes.page} height="100%" width="100%">            
             <Box height="8%" width="100%">
-                <Nav handleClick={()=>console.log('mmd')}/>
+                <Nav/>
             </Box>
             <Box className={classes.main} height="92%" width="100%">
                 {/* //? side bar section */}

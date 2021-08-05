@@ -62,7 +62,12 @@ export default function StyledCheckbox({handleClick}) {
   useEffect(()=>{
     getUserData()
     .then(setUserInfo)
-    .catch(err=>console.log(err))
+    .catch(({response:{status}})=>{
+      if(status===401){
+        localStorage.clear();
+        window.location.reload();
+      }
+    })
   },[])
 
   return (

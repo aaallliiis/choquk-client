@@ -81,6 +81,7 @@ export default function Login(){
             adminLogin(body)
             .then((res)=>{
                 localStorage.setItem('token',`Bearer ${res.data}`)
+                localStorage.setItem('isAdmin',true)
                 window.location.reload()
             })
             .catch(({response:{data:{error}}})=>handleOpenSnack(error,snackbarTypes.error))

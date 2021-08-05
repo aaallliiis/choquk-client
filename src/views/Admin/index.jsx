@@ -4,12 +4,11 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 
 export default function Admin(){
-    const { path, url } = useRouteMatch();
+    const { path } = useRouteMatch();
     const [isLoggedIn,setIsLoggedIn] = useState(localStorage.getItem('token'));
 
     useEffect(()=>setIsLoggedIn(localStorage.getItem('token')),[localStorage.getItem('token')])
 
-    console.log(path,url)
     return (
         <Switch>
             <Route exact path={`${path}`}>

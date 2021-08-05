@@ -50,29 +50,9 @@ const useStyles=makeStyles({
   },
 })
 
-export default function NavBar() {
+export default function AdminNavBar() {
   //* url history  
   const classes=useStyles();
-  const {push,location:{pathname}} = useHistory();  
-
-  //? store user info
-  const [userInfo,setUserInfo]=useState('')
-
-  //? getting User Data
-  useEffect(()=>{
-    getUserData()
-    .then(setUserInfo)
-    .catch(({response:{status}})=>{
-      if(status===401){
-        if(localStorage.getItem('isAdmin'))
-          push('/admin');
-        else{
-          localStorage.clear();
-          window.location.reload();
-        }
-      }
-    })
-  },[])
 
   return (
     <React.Fragment>
@@ -82,19 +62,9 @@ export default function NavBar() {
         </Grid>
         <div className={classes.fade}>
           <div className={classes.divs} > 
-            {userInfo.name?`سلام ${userInfo.name}`:''}
+            سلام مدیریت 
           </div>
           <div className={classes.divs}> 
-            {pathname!=='/'&&<div className={classes.row} onClick={()=>push('/')}>
-              <Tooltip arrow title={titles.home}>
-                <Home />
-              </Tooltip>
-            </div>}
-            <div className={classes.row} onClick={()=>push(`/profile/${userInfo._id}`)}>
-              <Tooltip arrow title={titles.profile}>
-                <AccountCircleRoundedIcon />
-              </Tooltip>
-            </div>
             <div className={classes.row} 
               onClick={()=>{
                 localStorage.clear();

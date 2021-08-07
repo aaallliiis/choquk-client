@@ -1,31 +1,57 @@
 import React , {useState} from 'react';
+import { useRouteMatch,Switch ,Route ,Redirect,Link,useLocation} from 'react-router-dom';
 import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
 import Nav from '../../../components/AdminNavBar';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles({
     page:{
         overflow:'hidden',
-      },
+        backgroundColor:'#E8F3F6'
+    },
     main:{
         display:'flex',
-      },
-      left_sidebar:{
+    },
+    sidebar:{
+        marginTop:20,
         backgroundColor: 'transparent',
-        borderLeft:'1px',
-        borderLeftStyle:'solid',
         overflowX:'hidden',
         overflowY:'auto',
-        padding:10,
+        padding:'10px 0px 10px 10px',
         paddingBottom:50,
         boxSizing:'border-box',
-      },
-      right:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-around'
+    },
+    left_box:{
         backgroundColor: 'transparent'
-      },
+    },
+    mmd:{
+        width:'80%',
+        height:'10%',
+        padding:5,
+        backgroundColor:'#FCFCFC',
+        borderRadius:'30px 0 0 30px',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:"center",
+        color:'#000',
+        textDecoration:'none'
+    },
+    active:{
+        boxShadow:'0px 0px 20px -3px #aaaaaa ',
+    }
 })
 
 export default function Home(){
+    const { path } = useRouteMatch();
+    const { pathname } = useLocation();
     const classes = useStyles();
+
+    const [active,setActive] = useState();
+
+    useEffect(()=>setActive(pathname.split('/')[3]),[pathname])
 
     return (
         <Box className={classes.page} height="100%" width="100%">            
@@ -33,154 +59,34 @@ export default function Home(){
                 <Nav/>
             </Box>
             <Box className={classes.main} height="92%" width="100%">
-                {/* //? side bar section */}
-                <Box className={classes.left_sidebar} height="100%" width="18%" minWidth={300}>
-                    <Box padding='0.2rem' marginBottom="1rem">
-                        <Box className={classes.box} width="100%" height="100%" minHeight={150}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.tag}</p>
-                            <CustomizedAutoComplete handleTags={(array)=>handleTags(array)} /> */}
-                        </Box>
-                    </Box>
-                    {/*//? check box for type selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.data_type}</p>
-                            <Box>
-                                {Object.entries(searchPageDataTypeConentPersian).map(([, value])=><Box>
-                                <StyledCheckbox content={value} 
-                                    checked={searchBody.material_Type.includes(value)}
-                                    onClick={({target:{checked}})=>{
-                                    handleTypeCheckBox(value,checked);
-                                    }}
-                                />
-                                </Box>)}
-                            </Box> */}
-                        </Box>
-                    </Box>
-                    {/*//? project check box section */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.projects}</p>
-                            {projectLoading?<CircularProgress/>:
-                                <Box height='90%' style={{overflowY:'auto'}}>
-                                {allProjects.map(item => 
-                                    <Box>
-                                    <StyledCheckbox 
-                                        checked={searchBody.project.includes(item._id.$oid)}
-                                        content={item.title} 
-                                        onClick={({target:{checked}})=>{
-                                        handleProjectCheckBox(checked,item._id.$oid)
-                                        }}
-                                    />
-                                    </Box>
-                                )}
-                                </Box>
-                            } */}
-                        </Box>
-                    </Box>
-                    {/*//? security selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.security}</p>
-                            {
-                            searchPageSecurityHeaders.map(({title,id})=><Box>
-                                <StyledCheckbox content={title} 
-                                checked={searchBody.confidentiality_level.includes(title  )}
-                                onClick={({target:{checked}})=>{
-                                handleconfidentialityLevelCheckBox(title,checked);
-                                }}
-                                />
-                            </Box>) 
-                            } */}
-                        </Box>
-                    </Box>
-                    {/*//? date selection */}
-                    <Box padding="0.2rem" marginBottom="1rem">
-                        <Box className={classes.box}>
-                            {/* <Box className={classes.headerBox}>
-                                <Box width="100%">
-                                <hr style={{marginBottom:"6%"}}/>
-                                </Box>
-                                <Box width={170}> */}
-                                {/* <p className={classes.headerContent}>{searchPageSideBarHeaders.time_picker}</p> */}
-                                {/* </Box>
-                            </Box> */}
-                            {/* //? start time picker */}
-                            {/* <Box my={2}>
-                                <Grid
-                                container
-                                direction="row-reverse"
-                                justify="space-around"
-                                alignItems="center"
-                                >
-                                <CustomizedDatePicker hanldeDate={(date)=>handleDatePicker(date,'date_start')}/>
-                                <span>{searchPageSideBarHeaders.from}</span>
-                                </Grid>
-                            </Box> */}
-                            {/* //? end time picker */}
-                            {/* <Box>
-                                <Grid
-                                container
-                                direction="row-reverse"
-                                justify="space-around"
-                                alignItems="center"
-                                >
-                                <CustomizedDatePicker  hanldeDate={(date)=>handleDatePicker(date,'date_end')}/>
-                                <span>{searchPageSideBarHeaders.till}</span>
-                                </Grid>
-                            </Box> */}
-                            {/* //? reset btn */}
-                            {/* <Box style={{marginTop:20}}> 
-                                {(searchBody.date_start!==""||searchBody.date_end!=="")&&<Button onClick={resetDates}>
-                                {searchPageSideBarHeaders.reset}</Button>}
-                            </Box> */}
-                        </Box>
-                    </Box>
+                <Box className={classes.sidebar} height="100%" width="14%">
+                    <Link to={`${path}/field`} className={`${classes.mmd} ${active==='field'&&classes.active}`}>مدیریت رشته ها</Link>
+                    <Link to={`${path}/orientation`} className={`${classes.mmd} ${active==='orientation'&&classes.active}`}>مدیریت گرایش ها</Link>
+                    <Link to={`${path}/course`} className={`${classes.mmd} ${active==='course'&&classes.active}`}>مدیریت درس ها</Link>
+                    <Link to={`${path}/file`} className={`${classes.mmd} ${active==='file'&&classes.active}`}>مدیریت نوشته ها</Link>
+                    <Link to={`${path}/prof`} className={`${classes.mmd} ${active==='prof'&&classes.active}`}>مدیریت استاد ها</Link>
                 </Box>
-                { /*//?  show cards and tables and a button to change  */}
-                <Box className={classes.right} height="100%" width="82%">
-                    {/* //? search bar and toggle btn section */}
-                    <Box className={classes.searchbox} height="15%" width="100%">
-                        <Box className={classes.searchboxContainer} width="100%" height="100%">
-                            {/* <Grid container justify="space-between" wrap='nowrap' alignItems="center">
-                                <SearchBox
-                                handleSearch={handleSearchBox}
-                                history={[]}
-                                text={searchBody.search_Text}/>
-                                <SwitchBotton 
-                                handldeChange={handleSwitchChange} 
-                                checked={searchBody.isStatement} 
-                                lable={searchPageSideBarHeaders.algebraic_search} width="20%"
-                                />
-                                <SwitchBotton
-                                handldeChange={handleFileNameFilterSwitchChange} 
-                                checked={searchBody.file_name_filter} 
-                                lable={searchPageSideBarHeaders.file_name_filter} width="20%"
-                                />
-                            </Grid> */}
-                        </Box>
-                    </Box>
-                    {/* //? materail table and card section */}
-                    <Box className={classes.content} height="85%" width="100%">
-                        {/* <CustomizedButtons keepActive={keepActive} handleClick={(value)=>setKeepActive(value)}/> */}
-                        {/* {
-                            loading?<CircularProgress/>:
-                            allMaterial.length===0?
-                                notFound?
-                                <div style={{color:'red'}}>
-                                    {searchPageSideBarHeaders.notFound}
-                                </div>
-                                :
-                                <button onClick={Search}>{searchPageSideBarHeaders.tryAgain}</button>
-                                :
-                            keepActive?allMaterial.map(element =><Cards searchedText={query.get('search')} data={element} />)
-                            :
-                            <Tables searchedText={query.get('search')} columns={columns} data={allMaterial} showCheckbox={false} showDelete={false}/>
-                        }
-                        {
-                            loading||allMaterial.length===0||finished?null:<ShowMore onClick={handleShowMore}/>
-                        } */}
-                    </Box>
+                <Box className={classes.left_box} height="100%" width="86%">
+                    <Switch>
+                        <Route exact path={`${path}`}>
+                            <Redirect to={`${path}/field`}/>
+                        </Route>
+                        <Route path={`${path}/field`}>
+                            <div>mmd</div>
+                        </Route>
+                        <Route path={`${path}/orientation`}>
+                            <div>mmd2</div>
+                        </Route>
+                        <Route path={`${path}/course`}>
+                            <div>mmd3</div>
+                        </Route>
+                        <Route path={`${path}/file`}>
+                            <div>mmd4</div>
+                        </Route>
+                        <Route path={`${path}/prof`}>
+                            <div>mmd5</div>
+                        </Route>
+                    </Switch>
                 </Box>
             </Box>
             </Box>

@@ -1,9 +1,8 @@
-import React , {useState} from 'react';
+import React , {useEffect,useState} from 'react';
 import { useRouteMatch,Switch ,Route ,Redirect,Link,useLocation} from 'react-router-dom';
-import {Box, Button, Grid, TextField, IconButton, InputAdornment,makeStyles } from '@material-ui/core';
+import {Box,makeStyles } from '@material-ui/core';
 import Nav from '../../../components/AdminNavBar';
-import { useEffect } from 'react';
-
+import Fields from '../Fields';
 const useStyles = makeStyles({
     page:{
         overflow:'hidden',
@@ -72,7 +71,7 @@ export default function Home(){
                             <Redirect to={`${path}/field`}/>
                         </Route>
                         <Route path={`${path}/field`}>
-                            <div>mmd</div>
+                            <Fields/>
                         </Route>
                         <Route path={`${path}/orientation`}>
                             <div>mmd2</div>
@@ -89,6 +88,6 @@ export default function Home(){
                     </Switch>
                 </Box>
             </Box>
-            </Box>
+        </Box>
     )
 }

@@ -53,7 +53,7 @@ export default function Home() {
       </Box>
       {loading ? (
         <LinearProgress />
-      ) : fields.length !== 0 ? (
+      ) : fields.length === 0 ? (
         <h3 style={{ color: "red", textAlign: "center" }}>{titles.notFound}</h3>
       ) : (
         <Table columns={FieldColumns} data={fields} />

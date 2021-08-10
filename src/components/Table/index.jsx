@@ -73,24 +73,17 @@ export default function Tables({
   columns,
   data,
   // setPage,
-  // setDeleteOpen,
+  handleDelete,
 }) {
   const classes = useStyles();
-  console.log(data);
-  // const handleCellClick = ({ target: { tagName } }, item) =>
-  //   tagName === "BUTTON" ||
-  //   tagName === "svg" ||
-  //   tagName === "path" ||
-  //   tagName === "INPUT" ||
-  //   tagName === "SPAN"
-  //     ? null
-  //     : item.views_count !== undefined
-  //     ? history.push(
-  //         `/material/${item.id ? item.id : item._id.$oid}/${
-  //           tabsContentPersian.default.tags
-  //         }${searchedText ? `?${query}` : ""}`
-  //       )
-  //     : setPage(item);
+
+  const handleCellClick = ({ target: { tagName } }, item) =>
+    tagName === "BUTTON" ||
+    tagName === "svg" ||
+    tagName === "path" ||
+    tagName === "SPAN"
+      ? null
+      : console.log("mmd");
 
   return (
     <div className={classes.main}>
@@ -121,14 +114,12 @@ export default function Tables({
                   const value = item[column.id];
                   return (
                     <StyledTableCell
-                      // onClick={(e) => handleCellClick(e, item)}
+                      onClick={(e) => handleCellClick(e, item)}
                       align={column.align}
                       key={column.id}
                     >
                       {column.id === "btn" ? (
-                        <Button
-                        // onClick={() => setDeleteOpen(item)}
-                        >
+                        <Button onClick={() => handleDelete(item)}>
                           <Close style={{ color: "red" }} />
                         </Button>
                       ) : Array.isArray(value) ? (

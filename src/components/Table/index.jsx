@@ -72,7 +72,7 @@ const useStyles = makeStyles({
 export default function Tables({
   columns,
   data,
-  // setPage,
+  handleCellClick: click,
   handleDelete,
 }) {
   const classes = useStyles();
@@ -83,7 +83,7 @@ export default function Tables({
     tagName === "path" ||
     tagName === "SPAN"
       ? null
-      : console.log("mmd");
+      : click(item);
 
   return (
     <div className={classes.main}>

@@ -1,4 +1,6 @@
 export const titles = {
+  name: "نام",
+  edit: "ویرایش",
   home: "صفحه اصلی",
   profile: "پنل کاربری",
   fields: "مدیریت رشته ها",

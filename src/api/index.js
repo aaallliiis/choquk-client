@@ -14,13 +14,20 @@ import {
 } from "./user/home";
 
 import { adminLogin } from "./admin/auth";
-import { getAllFields as getAllAdminFields, deleteField } from "./admin/fields";
+import {
+  getAllFields as getAllAdminFields,
+  deleteField,
+  addField,
+  editField,
+} from "./admin/fields";
 
 export {
   // admin api
   adminLogin,
   getAllAdminFields,
   deleteField,
+  addField,
+  editField,
   // users api
   register,
   login,

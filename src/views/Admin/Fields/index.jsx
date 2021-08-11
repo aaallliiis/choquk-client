@@ -52,7 +52,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Home() {
+export default function Fields() {
   const classes = useStyles();
 
   const [fields, setFields] = useState([]);

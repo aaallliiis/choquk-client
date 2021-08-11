@@ -55,9 +55,13 @@ const useStyles = makeStyles({
     width: "100%",
     textAlign: "right",
   },
-  content: {
+  cardBox: {
     display: "flex",
     flexWrap: "wrap",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: "transparent",
     overflowX: "hidden",
     overflowY: "auto",
@@ -180,7 +184,7 @@ export default function Home() {
             رشته ها و درس ها
           </div>
           <Divider />
-          {fields.map(({ name, _id, courses }) => (
+          {fields.map(({ name, id, courses }) => (
             <Box
               className={classes.box}
               padding="0.2rem"
@@ -190,30 +194,30 @@ export default function Home() {
             >
               <Button
                 onClick={() => {
-                  if (selectedFields.includes(_id))
+                  if (selectedFields.includes(id))
                     setSelectedFields((old) =>
-                      old.filter((item) => item !== _id)
+                      old.filter((item) => item !== id)
                     );
-                  else setSelectedFields((old) => [...old, _id]);
+                  else setSelectedFields((old) => [...old, id]);
                 }}
                 className={`${
-                  selectedFields.includes(_id) ? classes.active : ""
+                  selectedFields.includes(id) ? classes.active : ""
                 } ${classes.fieldBtn}`}
               >
                 <div className={classes.fieldDiv}>{name}</div>
               </Button>
               <Box className={classes.courseBox}>
-                {courses.map(({ name, _id }) => (
+                {courses.map(({ name, id }) => (
                   <Button
                     onClick={() => {
-                      if (selectedCourses.includes(_id))
+                      if (selectedCourses.includes(id))
                         setSelectedCourses((old) =>
-                          old.filter((item) => item !== _id)
+                          old.filter((item) => item !== id)
                         );
-                      else setSelectedCourses((old) => [...old, _id]);
+                      else setSelectedCourses((old) => [...old, id]);
                     }}
                     className={`${
-                      selectedCourses.includes(_id) ? classes.active : ""
+                      selectedCourses.includes(id) ? classes.active : ""
                     } ${classes.courseBtn}`}
                   >
                     <div className={classes.courseDiv}>{name}</div>
@@ -233,15 +237,28 @@ export default function Home() {
           </Box>
           {/* //? materail table and card section */}
           <Box className={classes.content} height="85%" width="100%">
-            {files.length > 0 ? (
-              files.map((item) => <Cards item={item} />)
-            ) : (
-              <h3 style={{ textAlign: "center", width: "100%", color: "red" }}>
-                {titles.notFound}
-              </h3>
-            )}
+            <Box className={classes.cardBox} width="100%" height="fit-content%">
+              {files.length > 0 ? (
+                files.map((item) => <Cards item={item} />)
+              ) : (
+                <h3
+                  style={{ textAlign: "center", width: "100%", color: "red" }}
+                >
+                  {titles.notFound}
+                </h3>
+              )}
+            </Box>
             {!firstTime && !finished && (
-              <ShowMore onClick={() => setNumber((old) => old + 10)} />
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  left: 35,
+                  justifyContent: "center",
+                }}
+              >
+                <ShowMore onClick={() => setNumber((old) => old + 10)} />
+              </div>
             )}
           </Box>
         </Box>

@@ -1,28 +1,25 @@
-import React from 'react'
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
 
 const StyledShowMoreButton = withStyles({
-  root:{
-    background:'#AAAAAA',
-    borderRadius:5,
-    height:35,
-    marginTop:10,
-    position:'relative',
-    bottom:0,
-    right:'41%'
+  root: {
+    background: "#AAAAAA",
+    borderRadius: 5,
+    height: 35,
+    maxWidth: 100,
+    marginTop: 10,
   },
   label: {
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
-  '&:hover':{
-    backgroundColor:'#AAAAAA',
+  "&:hover": {
+    backgroundColor: "#AAAAAA",
   },
-})(Button)
+})(Button);
 
-
-export default function ShowMore ({onClick}) {
-    return <StyledShowMoreButton onClick={onClick} >نمایش بیشتر</StyledShowMoreButton>;
+export default function ShowMore({ onClick }) {
+  return (
+    <StyledShowMoreButton onClick={onClick}>نمایش بیشتر</StyledShowMoreButton>
+  );
 }
-
-

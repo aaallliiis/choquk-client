@@ -21,6 +21,15 @@ import {
   editField,
 } from "./admin/fields";
 
+import {
+  getAllCourses,
+  addCourse,
+  editCourse,
+  deleteCourse,
+} from "./admin/course";
+
+import { getAllProfs } from "./admin/prof";
+
 export {
   // admin api
   adminLogin,
@@ -28,6 +37,11 @@ export {
   deleteField,
   addField,
   editField,
+  getAllCourses,
+  addCourse,
+  editCourse,
+  deleteCourse,
+  getAllProfs,
   // users api
   register,
   login,

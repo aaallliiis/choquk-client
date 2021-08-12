@@ -244,7 +244,7 @@ export default function Courses() {
               justify="space-around"
             >
               <div className={classes.inputDiv}>
-                <label>{titles.name} : </label>
+                <label>{`${titles.name} ${titles.course}`} : </label>
                 <input
                   autoFocus
                   className={classes.input}
@@ -255,7 +255,7 @@ export default function Courses() {
                 />
               </div>
               <div className={classes.inputDiv}>
-                <label>{titles.name} : </label>
+                <label>{`${titles.name} ${titles.field}`} : </label>
                 <Select
                   className={classes.select}
                   value={clickedItem.fieldId}
@@ -269,7 +269,7 @@ export default function Courses() {
                 </Select>
               </div>
               <div className={classes.inputDiv}>
-                <label>{titles.name} : </label>
+                <label>{`${titles.name} ${titles.prof}`} : </label>
                 <Select
                   className={classes.select}
                   value={clickedItem.profId}

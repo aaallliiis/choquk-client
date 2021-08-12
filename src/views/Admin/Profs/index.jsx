@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     outline: "none",
     padding: "2%",
     borderRadius: "0.5rem",
-    width: "75%",
+    width: "70%",
     border: `1px solid #333333`,
     fontSize: "1rem",
     "&:focus": {
@@ -201,7 +201,7 @@ export default function Fields() {
         <DialogContent style={{ minWidth: 300, minHeight: 70 }}>
           <DialogContentText>
             <Grid container alignItems="center" justify="space-around">
-              <label>{titles.name} : </label>
+              <label>{`${titles.name} ${titles.prof}`} : </label>
               <input
                 autoFocus
                 className={classes.input}

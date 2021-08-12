@@ -11,6 +11,7 @@ import { Box, makeStyles } from "@material-ui/core";
 import Nav from "../../../components/AdminNavBar";
 import Fields from "../Fields";
 import Courses from "../Courses";
+import Profs from "../Profs";
 import { titles } from "../../../assets/titles";
 
 const useStyles = makeStyles({
@@ -122,7 +123,7 @@ export default function Home() {
               <div>mmd4</div>
             </Route>
             <Route path={`${path}/prof`}>
-              <div>mmd5</div>
+              <Profs />
             </Route>
           </Switch>
         </Box>

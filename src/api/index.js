@@ -28,7 +28,7 @@ import {
   deleteCourse,
 } from "./admin/course";
 
-import { getAllProfs } from "./admin/prof";
+import { getAllProfs, addProf, editProf, deleteProf } from "./admin/prof";
 
 export {
   // admin api
@@ -42,6 +42,9 @@ export {
   editCourse,
   deleteCourse,
   getAllProfs,
+  addProf,
+  editProf,
+  deleteProf,
   // users api
   register,
   login,

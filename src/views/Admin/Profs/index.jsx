@@ -47,14 +47,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Fields() {
+export default function Profs() {
   const classes = useStyles();
 
   const [profs, setProfs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [clickedItem, setClickedItem] = useState({ name: "asdf" });
+  const [clickedItem, setClickedItem] = useState({});
   const [snack, setSnack] = useState({
     status: false,
     message: "",
@@ -81,8 +81,8 @@ export default function Fields() {
   };
 
   const handleClose = () => {
-    setClickedItem({});
     setOpen(false);
+    setClickedItem({});
   };
 
   const handleDeleteOpen = (item) => {

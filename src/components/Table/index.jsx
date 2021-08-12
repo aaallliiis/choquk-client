@@ -122,6 +122,16 @@ export default function Tables({
                         <Button onClick={() => handleDelete(item)}>
                           <Close style={{ color: "red" }} />
                         </Button>
+                      ) : column.id === "type" ? (
+                        value === "PDF" ? (
+                          "پی دی اف"
+                        ) : value === "IMG" ? (
+                          "عکس"
+                        ) : value === "VID" ? (
+                          "فیلم"
+                        ) : value === "VC" ? (
+                          "صوت"
+                        ) : null
                       ) : Array.isArray(value) ? (
                         value.length
                       ) : (

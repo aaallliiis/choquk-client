@@ -26,9 +26,21 @@ import {
   addCourse,
   editCourse,
   deleteCourse,
-} from "./admin/course";
+} from "./admin/courses";
 
-import { getAllProfs, addProf, editProf, deleteProf } from "./admin/prof";
+import {
+  getAllFiles as getAllAdminFiles,
+  addFile,
+  editFile,
+  deleteFile,
+} from "./admin/files";
+
+import { getAllProfs, addProf, editProf, deleteProf } from "./admin/profs";
+
+// import {
+//   getAllOrientations as getAllAdminOrientations,
+//   getAllOrientationsByField,
+// } from "./admin/orientations";
 
 export {
   // admin api
@@ -45,6 +57,10 @@ export {
   addProf,
   editProf,
   deleteProf,
+  getAllAdminFiles,
+  addFile,
+  editFile,
+  deleteFile,
   // users api
   register,
   login,

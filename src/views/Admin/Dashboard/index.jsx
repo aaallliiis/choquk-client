@@ -12,6 +12,7 @@ import Nav from "../../../components/AdminNavBar";
 import Fields from "../Fields";
 import Courses from "../Courses";
 import Profs from "../Profs";
+import File from "../File";
 import { titles } from "../../../assets/titles";
 
 const useStyles = makeStyles({
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
   left_box: {
     backgroundColor: "transparent",
   },
-  mmd: {
+  links: {
     width: "80%",
     height: "10%",
     padding: 5,
@@ -72,13 +73,15 @@ export default function Home() {
         <Box className={classes.sidebar} height="100%" width="14%">
           <Link
             to={`${path}/field`}
-            className={`${classes.mmd} ${active === "field" && classes.active}`}
+            className={`${classes.links} ${
+              active === "field" && classes.active
+            }`}
           >
             {titles.fields}
           </Link>
           <Link
             to={`${path}/orientation`}
-            className={`${classes.mmd} ${
+            className={`${classes.links} ${
               active === "orientation" && classes.active
             }`}
           >
@@ -86,7 +89,7 @@ export default function Home() {
           </Link>
           <Link
             to={`${path}/course`}
-            className={`${classes.mmd} ${
+            className={`${classes.links} ${
               active === "course" && classes.active
             }`}
           >
@@ -94,13 +97,17 @@ export default function Home() {
           </Link>
           <Link
             to={`${path}/file`}
-            className={`${classes.mmd} ${active === "file" && classes.active}`}
+            className={`${classes.links} ${
+              active === "file" && classes.active
+            }`}
           >
             {titles.files}
           </Link>
           <Link
             to={`${path}/prof`}
-            className={`${classes.mmd} ${active === "prof" && classes.active}`}
+            className={`${classes.links} ${
+              active === "prof" && classes.active
+            }`}
           >
             {titles.profs}
           </Link>
@@ -120,7 +127,7 @@ export default function Home() {
               <Courses />
             </Route>
             <Route path={`${path}/file`}>
-              <div>mmd4</div>
+              <File />
             </Route>
             <Route path={`${path}/prof`}>
               <Profs />

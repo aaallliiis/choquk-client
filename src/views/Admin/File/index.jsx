@@ -12,23 +12,24 @@ import {
   DialogActions,
   Select,
   MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import Table from "../../../components/Table";
-import { CourseColumns } from "../../../assets/columns";
+import { FileColumns } from "../../../assets/columns";
 import { titles } from "../../../assets/titles";
 import {
+  getAllAdminFiles,
   getAllAdminFields,
-  getAllCourses,
-  addCourse,
-  editCourse,
-  deleteCourse,
-  getAllProfs,
+  editFile,
+  addFile,
+  deleteFile,
 } from "../../../api";
 import Snackbar from "../../../components/Snackbar";
 import { snackbarTypes } from "../../../assets/snackbarTypes";
 import { errorsMessages } from "../../../assets/errorsMessages";
 import "./style.css";
+import { useRef } from "react";
 
 const useStyles = makeStyles({
   tables: {
@@ -73,19 +74,27 @@ const useStyles = makeStyles({
     marginTop: 10,
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+  },
+  form: {
+    direction: "column",
+    alignItems: "center",
+    justify: "space-around",
   },
 });
 
-export default function Courses() {
+export default function Files() {
   const classes = useStyles();
+  const formRef = useRef();
 
+  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [fields, setFields] = useState([]);
-  const [profs, setProfs] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [clickedItem, setClickedItem] = useState({});
   const [snack, setSnack] = useState({
     status: false,
@@ -108,11 +117,15 @@ export default function Courses() {
     });
 
   const handleOpen = (item) => {
+    setBtnLoading(false);
     setClickedItem(item);
+    if (item.id)
+      setCourses(fields.find(({ id }) => id === item.fieldId).courses);
     setOpen(true);
   };
 
   const handleClose = () => {
+    setBtnLoading(false);
     setOpen(false);
     setClickedItem({});
   };
@@ -128,46 +141,93 @@ export default function Courses() {
   };
 
   const handleAdd = () => {
-    if (!clickedItem.name || !clickedItem.fieldId || !clickedItem.profId)
+    if (
+      !clickedItem.title ||
+      !clickedItem.description ||
+      !clickedItem.type ||
+      !clickedItem.fieldId ||
+      !clickedItem.courseId ||
+      !file
+    )
       handleOpenSnack(errorsMessages.emptyField, snackbarTypes.error);
     else {
+      const formData = new FormData(formRef.current);
+      setBtnLoading(true);
       if (clickedItem.id) {
-        editCourse({ id: clickedItem.id, body: clickedItem })
+        editFile({ id: clickedItem.id, body: formData })
           .then((res) => handleOpenSnack(res, snackbarTypes.success))
-          .then(GetAllAdminCourses)
+          .then(GetAllAdminFiles)
           .then(handleClose)
           .catch(
             ({
               response: {
                 data: { error },
               },
-            }) =>
+            }) => {
+              setBtnLoading(false);
               Array.isArray(error)
                 ? handleOpenSnack(error.join(":"), snackbarTypes.error)
-                : handleOpenSnack(error, snackbarTypes.error)
+                : handleOpenSnack(error, snackbarTypes.error);
+            }
           );
       } else
-        addCourse(clickedItem)
+        addFile(formData)
           .then((res) => handleOpenSnack(res, snackbarTypes.success))
-          .then(GetAllAdminCourses)
+          .then(GetAllAdminFiles)
           .then(handleClose)
           .catch(
             ({
               response: {
                 data: { error },
               },
-            }) =>
+            }) => {
+              setBtnLoading(false);
               Array.isArray(error)
                 ? handleOpenSnack(error.join(":"), snackbarTypes.error)
-                : handleOpenSnack(error, snackbarTypes.error)
+                : handleOpenSnack(error, snackbarTypes.error);
+            }
           );
     }
   };
 
+  const handleFileChange = ({ target: { files } }) => {
+    if (
+      clickedItem.type === "PDF" &&
+      !files[0].type.split("/").includes("pdf")
+    ) {
+      handleOpenSnack(errorsMessages.file, snackbarTypes.error);
+      setFile(null);
+      formRef.current.reset();
+    } else if (
+      clickedItem.type === "IMG" &&
+      !files[0].type.split("/").includes("image")
+    ) {
+      handleOpenSnack(errorsMessages.file, snackbarTypes.error);
+      setFile(null);
+      formRef.current.reset();
+    } else if (
+      clickedItem.type === "VID" &&
+      !files[0].type.split("/").includes("video")
+    ) {
+      handleOpenSnack(errorsMessages.file, snackbarTypes.error);
+      setFile(null);
+      formRef.current.reset();
+    } else if (
+      clickedItem.type === "VC" &&
+      !files[0].type.split("/").includes("audio")
+    ) {
+      handleOpenSnack(errorsMessages.file, snackbarTypes.error);
+      setFile(null);
+      formRef.current.reset();
+    } else if (!clickedItem.type)
+      handleOpenSnack(errorsMessages.emptyField, snackbarTypes.error);
+    else setFile(files[0]);
+  };
+
   const handleDelete = () =>
-    deleteCourse(clickedItem.id)
+    deleteFile(clickedItem.id)
       .then((res) => handleOpenSnack(res, snackbarTypes.success))
-      .then(GetAllAdminCourses)
+      .then(GetAllAdminFiles)
       .then(handleDeleteClose)
       .catch(
         ({
@@ -177,20 +237,16 @@ export default function Courses() {
         }) => handleOpenSnack(error, snackbarTypes.error)
       );
 
-  const GetAllAdminCourses = () => {
+  const GetAllAdminFiles = () => {
     setLoading(true);
-    getAllCourses()
-      .then(setCourses)
-      .then(() =>
-        getAllAdminFields()
-          .then(setFields)
-          .then(() => getAllProfs().then(setProfs))
-      )
+    getAllAdminFiles()
+      .then(setFiles)
+      .then(() => getAllAdminFields().then(setFields))
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
   };
 
-  useEffect(GetAllAdminCourses, []);
+  useEffect(GetAllAdminFiles, []);
 
   return (
     <Box className={classes.tables} height="100%" width="100%">
@@ -208,7 +264,7 @@ export default function Courses() {
           alignItems="center"
           className={classes.header}
         >
-          <h2>{titles.courses}</h2>
+          <h2>{titles.files}</h2>
           <Button onClick={() => handleOpen({})}>
             {titles.add}
             <Add />
@@ -217,12 +273,12 @@ export default function Courses() {
       </Box>
       {loading ? (
         <LinearProgress />
-      ) : courses.length === 0 ? (
+      ) : files.length === 0 ? (
         <h3 style={{ color: "red", textAlign: "center" }}>{titles.notFound}</h3>
       ) : (
         <Table
-          columns={CourseColumns}
-          data={courses}
+          columns={FileColumns}
+          data={files}
           handleCellClick={handleOpen}
           handleDelete={handleDeleteOpen}
         />
@@ -237,31 +293,54 @@ export default function Courses() {
         </DialogTitle>
         <DialogContent style={{ minWidth: 400, minHeight: 100 }}>
           <DialogContentText>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justify="space-around"
-            >
+            <form ref={formRef} className={classes.form}>
               <div className={classes.inputDiv}>
-                <label>{`${titles.name} ${titles.course}`} : </label>
+                <label>{`${titles.name} ${titles.file}`} : </label>
                 <input
-                  autoFocus
                   className={classes.input}
-                  value={clickedItem.name ? clickedItem.name : ""}
+                  name="title"
+                  value={clickedItem.title ? clickedItem.title : ""}
                   onChange={({ target: { value } }) => {
-                    setClickedItem((old) => ({ ...old, name: value }));
+                    setClickedItem((old) => ({ ...old, title: value }));
                   }}
                 />
+              </div>
+              <div className={classes.inputDiv}>
+                <label>{titles.description} : </label>
+                <input
+                  className={classes.input}
+                  name="description"
+                  value={clickedItem.description ? clickedItem.description : ""}
+                  onChange={({ target: { value } }) => {
+                    setClickedItem((old) => ({ ...old, description: value }));
+                  }}
+                />
+              </div>
+              <div className={classes.inputDiv}>
+                <label>{titles.type} : </label>
+                <Select
+                  className={classes.select}
+                  name="type"
+                  value={clickedItem.type}
+                  onChange={({ target: { value } }) =>
+                    setClickedItem((old) => ({ ...old, type: value }))
+                  }
+                >
+                  {titles.types.map((item) => (
+                    <MenuItem value={item.id}>{item.name}</MenuItem>
+                  ))}
+                </Select>
               </div>
               <div className={classes.inputDiv}>
                 <label>{`${titles.name} ${titles.field}`} : </label>
                 <Select
                   className={classes.select}
+                  name="fieldId"
                   value={clickedItem.fieldId}
-                  onChange={({ target: { value } }) =>
-                    setClickedItem((old) => ({ ...old, fieldId: value }))
-                  }
+                  onChange={({ target: { value } }) => {
+                    setClickedItem((old) => ({ ...old, fieldId: value }));
+                    setCourses(fields.find(({ id }) => id === value).courses);
+                  }}
                 >
                   {fields.map((item) => (
                     <MenuItem value={item.id}>{item.name}</MenuItem>
@@ -269,39 +348,55 @@ export default function Courses() {
                 </Select>
               </div>
               <div className={classes.inputDiv}>
-                <label>{`${titles.name} ${titles.prof}`} : </label>
+                <label>{`${titles.name} ${titles.course}`} : </label>
                 <Select
                   className={classes.select}
-                  value={clickedItem.profId}
+                  name="courseId"
+                  value={clickedItem.courseId}
                   onChange={({ target: { value } }) =>
-                    setClickedItem((old) => ({ ...old, profId: value }))
+                    setClickedItem((old) => ({ ...old, courseId: value }))
                   }
                 >
-                  {profs.map((item) => (
+                  {courses.map((item) => (
                     <MenuItem value={item.id}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </div>
-            </Grid>
+              <div className={classes.inputDiv}>
+                <label>{titles.fileInput} : </label>
+                <input
+                  name="file"
+                  type="file"
+                  className={classes.input}
+                  onChange={handleFileChange}
+                />
+              </div>
+            </form>
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ marginBottom: 15 }}>
-          <Button
-            onClick={handleClose}
-            style={{ marginRight: 10 }}
-            variant="contained"
-            color="secondary"
-          >
-            {titles.cancel}
-          </Button>
-          <Button
-            onClick={handleAdd}
-            style={{ marginRight: 10 }}
-            variant="contained"
-            color="primary"
-          >
-            {titles.accept}
-          </Button>
+          {btnLoading ? (
+            <CircularProgress size={25} style={{ marginLeft: 10 }} />
+          ) : (
+            <>
+              <Button
+                onClick={handleClose}
+                style={{ marginRight: 10 }}
+                variant="contained"
+                color="secondary"
+              >
+                {titles.cancel}
+              </Button>
+              <Button
+                onClick={handleAdd}
+                style={{ marginRight: 10 }}
+                variant="contained"
+                color="primary"
+              >
+                {titles.accept}
+              </Button>
+            </>
+          )}
         </DialogActions>
       </Dialog>
       <Dialog
@@ -312,7 +407,7 @@ export default function Courses() {
         <DialogTitle id="form-dialog-title">تایید</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {`آيا از پاک کردن ${clickedItem.name} مطمئن هستید؟`}
+            {`آيا از پاک کردن ${clickedItem.title} مطمئن هستید؟`}
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ marginBottom: 15 }}>

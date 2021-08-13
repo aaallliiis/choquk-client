@@ -37,10 +37,12 @@ import {
 
 import { getAllProfs, addProf, editProf, deleteProf } from "./admin/profs";
 
-// import {
-//   getAllOrientations as getAllAdminOrientations,
-//   getAllOrientationsByField,
-// } from "./admin/orientations";
+import {
+  getAllOrientations as getAllAdminOrientations,
+  deleteOrientation,
+  addOrientation,
+  editOrientation,
+} from "./admin/orientations";
 
 export {
   // admin api
@@ -61,6 +63,10 @@ export {
   addFile,
   editFile,
   deleteFile,
+  getAllAdminOrientations,
+  deleteOrientation,
+  addOrientation,
+  editOrientation,
   // users api
   register,
   login,

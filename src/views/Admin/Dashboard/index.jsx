@@ -13,6 +13,7 @@ import Fields from "../Fields";
 import Courses from "../Courses";
 import Profs from "../Profs";
 import File from "../File";
+import Orientation from "../Orientation";
 import { titles } from "../../../assets/titles";
 
 const useStyles = makeStyles({
@@ -121,7 +122,7 @@ export default function Home() {
               <Fields />
             </Route>
             <Route path={`${path}/orientation`}>
-              <div>mmd2</div>
+              <Orientation />
             </Route>
             <Route path={`${path}/course`}>
               <Courses />

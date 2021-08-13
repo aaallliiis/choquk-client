@@ -74,3 +74,24 @@ export const FileColumns = [
     align: "left",
   },
 ];
+
+export const OrientationColumns = [
+  {
+    id: "name",
+    label: "نام",
+    minWidth: 170,
+    align: "center",
+  },
+  {
+    id: "fieldName",
+    label: "نام رشته",
+    minWidth: 170,
+    align: "center",
+  },
+  {
+    id: "btn",
+    label: "",
+    minWidth: 170,
+    align: "left",
+  },
+];

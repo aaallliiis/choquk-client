@@ -28,7 +28,6 @@ import {
 import Snackbar from "../../../components/Snackbar";
 import { snackbarTypes } from "../../../assets/snackbarTypes";
 import { errorsMessages } from "../../../assets/errorsMessages";
-import "./style.css";
 import { useRef } from "react";
 
 const useStyles = makeStyles({
@@ -287,6 +286,7 @@ export default function Files() {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        PaperProps={{ style: { borderRadius: "0.7rem" } }}
       >
         <DialogTitle id="form-dialog-title">
           {clickedItem.id ? titles.edit : titles.add}
@@ -403,6 +403,7 @@ export default function Files() {
         open={deleteOpen}
         onClose={handleDeleteClose}
         aria-labelledby="form-dialog-title"
+        PaperProps={{ style: { borderRadius: "0.7rem" } }}
       >
         <DialogTitle id="form-dialog-title">تایید</DialogTitle>
         <DialogContent>

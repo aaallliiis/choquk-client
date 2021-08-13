@@ -11,6 +11,7 @@ import {
   getFileById,
   getAllOrientations,
   updateUser,
+  getAllProf,
 } from "./user/home";
 
 import { adminLogin } from "./admin/auth";
@@ -78,4 +79,5 @@ export {
   getFileById,
   getAllOrientations,
   updateUser,
+  getAllProf,
 };

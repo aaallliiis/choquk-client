@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Divider, makeStyles, Grid, Button } from "@material-ui/core";
 import Nav from "../../../components/NavBar";
 import Cards from "../../../components/Cards";
-import { getAllFields, getAllFiles } from "../../../api";
+import { getAllFields, getAllFiles, getAllProf } from "../../../api";
 import SearchBox from "../../../components/SearchBox";
 import ShowMore from "../../../components/ShowMore";
 import { titles } from "../../../assets/titles";
@@ -26,6 +26,18 @@ const useStyles = makeStyles({
     padding: 10,
     paddingBottom: 50,
     boxSizing: "border-box",
+    "&::-webkit-scrollbar": {
+      height: "1.2vh",
+      width: 10,
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#cccccc",
+      borderRadius: 20,
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#AAAAAA",
+      borderRadius: 20,
+    },
   },
   right: {
     backgroundColor: "transparent",
@@ -96,9 +108,10 @@ const useStyles = makeStyles({
     padding: "0.5rem",
     borderRadius: "0.5rem",
     boxShadow: `-1px -1px 20px 0px #aaaaaa`,
+    marginBottom: 20,
   },
   courseBox: {
-    height: "80%",
+    maxHeight: "80%",
     overflowY: "auto",
     overflowX: "hidden",
     "&::-webkit-scrollbar": {
@@ -121,12 +134,14 @@ export default function Home() {
   const [firstTime, setFirstTime] = useState(true);
   const [finished, setFinished] = useState(false);
   const [fields, setFields] = useState([]);
+  const [profs, setProfs] = useState([]);
   const [files, setFiles] = useState([]);
   const [number, setNumber] = useState(10);
 
   const [selectedFields, setSelectedFields] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
-  const [selectedProf, setSelectedProf] = useState("");
+  const [selectedProf, setSelectedProf] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   const Search = () => {
@@ -135,6 +150,7 @@ export default function Home() {
       fieldId: selectedFields,
       courseId: selectedCourses,
       profId: selectedProf,
+      type: selectedTypes,
       search: searchText,
     })
       .then((res) => {
@@ -148,6 +164,7 @@ export default function Home() {
     setFirstTime(false);
     getAllFields()
       .then(setFields)
+      .then(() => getAllProf().then(setProfs))
       .catch(({ response: { status } }) => {
         if (status === 401) {
           localStorage.clear();
@@ -164,7 +181,13 @@ export default function Home() {
       if (number === 10) Search();
       else setNumber(10);
     }
-  }, [selectedFields, selectedCourses, selectedProf, searchText]);
+  }, [
+    selectedFields,
+    selectedCourses,
+    selectedProf,
+    searchText,
+    selectedTypes,
+  ]);
 
   return (
     <Box className={classes.page} height="100%" width="100%">
@@ -181,7 +204,7 @@ export default function Home() {
               fontWeight: "bolder",
             }}
           >
-            رشته ها و درس ها
+            {`${titles.field} و ${titles.course}`}
           </div>
           <Divider />
           {fields.map(({ name, id, courses }) => (
@@ -226,6 +249,74 @@ export default function Home() {
               </Box>
             </Box>
           ))}
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: 10,
+              fontWeight: "bolder",
+              marginTop: 10,
+            }}
+          >
+            {`${titles.type} ${titles.file}`}
+          </div>
+          <Divider />
+          <Box
+            className={classes.box}
+            padding="0.2rem"
+            marginTop="1rem"
+            width="100%"
+            height={200}
+          >
+            {titles.types.map(({ id, name }) => (
+              <Button
+                onClick={() => {
+                  if (selectedTypes.includes(id))
+                    setSelectedTypes((old) =>
+                      old.filter((item) => item !== id)
+                    );
+                  else setSelectedTypes((old) => [...old, id]);
+                }}
+                className={`${
+                  selectedTypes.includes(id) ? classes.active : ""
+                } ${classes.fieldBtn}`}
+              >
+                <div className={classes.fieldDiv}>{name}</div>
+              </Button>
+            ))}
+          </Box>
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: 10,
+              fontWeight: "bolder",
+              marginTop: 10,
+            }}
+          >
+            {`${titles.prof} ${titles.course}`}
+          </div>
+          <Divider />
+          <Box
+            className={classes.box}
+            padding="0.2rem"
+            marginTop="1rem"
+            width="100%"
+            height={200}
+          >
+            {profs.map(({ id, name }) => (
+              <Button
+                onClick={() => {
+                  if (selectedProf.includes(id))
+                    setSelectedProf((old) => old.filter((item) => item !== id));
+                  else setSelectedProf((old) => [...old, id]);
+                }}
+                className={`${
+                  selectedProf.includes(id) ? classes.active : ""
+                } ${classes.fieldBtn}`}
+              >
+                <div className={classes.fieldDiv}>{name}</div>
+              </Button>
+            ))}
+          </Box>
         </Box>
         {/*//?  show cards and tables and a button to change  */}
         <Box className={classes.right} height="100%" width="83%">

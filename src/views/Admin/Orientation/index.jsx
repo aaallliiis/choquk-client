@@ -238,7 +238,7 @@ export default function Orientations() {
               justify="space-around"
             >
               <div className={classes.inputDiv}>
-                <label>{`${titles.name} ${titles.course}`} : </label>
+                <label>{`${titles.name} ${titles.orientation}`} : </label>
                 <input
                   autoFocus
                   className={classes.input}
@@ -293,7 +293,7 @@ export default function Orientations() {
         <DialogTitle id="form-dialog-title">تایید</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {`آيا از پاک کردن ${clickedItem.name} مطمئن هستید؟`}
+            {`آيا از پاک کردن "${clickedItem.name}" مطمئن هستید؟`}
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ marginBottom: 15 }}>

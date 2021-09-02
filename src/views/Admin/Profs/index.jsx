@@ -241,7 +241,7 @@ export default function Profs() {
         <DialogTitle id="form-dialog-title">تایید</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {`آيا از پاک کردن ${clickedItem.name} مطمئن هستید؟`}
+            {`آيا از پاک کردن "${clickedItem.name}" مطمئن هستید؟`}
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ marginBottom: 15 }}>

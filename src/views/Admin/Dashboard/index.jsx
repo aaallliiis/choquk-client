@@ -89,6 +89,14 @@ export default function Home() {
             {titles.orientations}
           </Link>
           <Link
+            to={`${path}/prof`}
+            className={`${classes.links} ${
+              active === "prof" && classes.active
+            }`}
+          >
+            {titles.profs}
+          </Link>
+          <Link
             to={`${path}/course`}
             className={`${classes.links} ${
               active === "course" && classes.active
@@ -104,14 +112,6 @@ export default function Home() {
           >
             {titles.files}
           </Link>
-          <Link
-            to={`${path}/prof`}
-            className={`${classes.links} ${
-              active === "prof" && classes.active
-            }`}
-          >
-            {titles.profs}
-          </Link>
         </Box>
         <Box className={classes.left_box} height="100%" width="86%">
           <Switch>
@@ -124,14 +124,14 @@ export default function Home() {
             <Route path={`${path}/orientation`}>
               <Orientation />
             </Route>
+            <Route path={`${path}/prof`}>
+              <Profs />
+            </Route>
             <Route path={`${path}/course`}>
               <Courses />
             </Route>
             <Route path={`${path}/file`}>
               <File />
-            </Route>
-            <Route path={`${path}/prof`}>
-              <Profs />
             </Route>
           </Switch>
         </Box>

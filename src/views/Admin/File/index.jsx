@@ -408,7 +408,7 @@ export default function Files() {
         <DialogTitle id="form-dialog-title">تایید</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {`آيا از پاک کردن ${clickedItem.title} مطمئن هستید؟`}
+            {`آيا از پاک کردن "${clickedItem.title}" مطمئن هستید؟`}
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ marginBottom: 15 }}>
